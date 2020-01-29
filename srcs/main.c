@@ -1,7 +1,7 @@
 #include "../includes/cubd.h"
 
 
-int	ft_exit_button(t_cubd *s)
+/*int	ft_exit_button(t_cubd *s)
 {
 	printf("on a appuye sur la croix\n");
 	mlx_clear_window(s->mlx_ptr, s->win_ptr);
@@ -65,27 +65,22 @@ int ft_key_event(int a, t_cubd *s)
 	else 
 		printf("touch pressee: %d\n", a);
 	return (1);
-}
+}*/
 
 int main(int argc, char **argv)
 {
-	t_cubd 	s;
+	//t_cubd 	s;
 	t_map	m;
-	int		size_x;		
-	int		size_y;
-	char 	*title;
+	int		err;
+	//int		size_x;		
+	//int		size_y;
+	//char 	*title;
 	
-	if (argc > 3)
-	{
-		write(1, "too much args\n", 14);
+	if (check_args(argc, argv) < 0)
 		return (1);
-	}
-	if (parse_map(&m) < 0)
-	{
-		write(1, "Error map\n", 10);
-		return (1);
-	}
-	title = "Cub3D";
+	if ((err = ft_map(&m, argv[1]))
+		return(ft_errors(err));
+	/*title = "Cub3D";
 	size_x = 800;
 	size_y = 800;
 	s.x = 0;
@@ -94,10 +89,10 @@ int main(int argc, char **argv)
 		exit(0);
 	if (!(s.win_ptr = mlx_new_window(s.mlx_ptr, size_x, size_y, title)))
 		exit(0);
-	mlx_hook(s.win_ptr, KPRESS, 0, ft_key_event, &s);
+	mlx_hook(s.win_ptr, KPRESS, 0, ft_key_event, &s);*/
 	
-	//Close the window with the button
-	mlx_hook(s.win_ptr, 17, 0, ft_exit_button, &s);
-	mlx_loop(s.mlx_ptr);
+	    //Close the window with the button
+	//mlx_hook(s.win_ptr, 17, 0, ft_exit_button, &s);
+	//mlx_loop(s.mlx_ptr);
 	return (0);
 }

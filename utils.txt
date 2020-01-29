@@ -2,6 +2,8 @@
 
 gcc -I minilibx_opengl -framework OpenGl -framework Appkit -L ../minilibx_opengl -lmlx main.c
 
+gcc -I minilibx_opengl -framework OpenGl -framework Appkit -L ../minilibx_opengl -lmlx *.c ../*.h ../lib/libftprintf.a
+
 https://qst0.github.io/ft_libgfx/man_mlx.html
 
 https://gist.github.com/KokaKiwi/4052375
