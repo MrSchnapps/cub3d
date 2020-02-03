@@ -17,19 +17,42 @@ int		ft_strcmp(char *s1, char *s2)
 	int i;
 
 	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
+	while (s1[i] == s2[i] && s1[i] && s2[i])
 		i++;
-	}
-	return (0);
+	return (s1[i] - s2[i]);
 }
 
-/*void	ft_putstr_fd(char *s, int fd)
+int		ft_atoi(char *nptr)
 {
-	if (!s)
-		return ;
-	while (*s)
-		ft_putchar_fd(*s++, fd);
-}*/
+	int					sign;
+	unsigned int		nb;
+
+	sign = 1;
+	while (*nptr == ' ' || (*nptr >= 9 && *nptr <= 13))
+		nptr++;
+	if (*nptr == '+' || *nptr == '-')
+	{
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
+	}
+	nb = 0;
+	while (*nptr >= 48 && *nptr <= 57)
+	{
+		nb = (nb * 10) + *nptr - '0';
+		nptr++;
+	}
+	return ((int)(nb * sign));
+}
+
+int		ft_tablen(char **str)
+{
+	int i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
+}

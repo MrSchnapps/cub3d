@@ -78,7 +78,8 @@ int main(int argc, char **argv)
 	
 	if (check_args(argc, argv) < 0)
 		return (1);
-	if ((err = ft_map(&m, argv[1]))
+	ft_init_map(&m);
+	if ((err = ft_map(&m, argv[1])))
 		return(ft_errors(err));
 	/*title = "Cub3D";
 	size_x = 800;
@@ -91,7 +92,7 @@ int main(int argc, char **argv)
 		exit(0);
 	mlx_hook(s.win_ptr, KPRESS, 0, ft_key_event, &s);*/
 	
-	    //Close the window with the button
+	//Close the window with the button
 	//mlx_hook(s.win_ptr, 17, 0, ft_exit_button, &s);
 	//mlx_loop(s.mlx_ptr);
 	return (0);

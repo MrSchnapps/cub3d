@@ -6,11 +6,11 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 12:38:54 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/01/29 16:38:34 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:13:37 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/cubd.h"
 
 static int		ft_check_char(char c, char charset)
 {
@@ -47,7 +47,7 @@ static int		ft_memory(char const *s, char c)
 	return (m);
 }
 
-static void		ft_free(char **str, int j)
+static void		ft_free_split(char **str, int j)
 {
 	while (j >= 0)
 	{
@@ -58,7 +58,7 @@ static void		ft_free(char **str, int j)
 	free(str);
 }
 
-char			**ft_split(char const *s, char c)
+char			**ft_split(char *s, char c)
 {
 	char	**tab;
 	int		i;
@@ -73,7 +73,7 @@ char			**ft_split(char const *s, char c)
 	{
 		if (!(tab[j] = (char *)malloc((ft_string(s, c) + 1) * 1)))
 		{
-			ft_free(tab, j);
+			ft_free_split(tab, j);
 			return (0);
 		}
 		while (!ft_check_char((char)*s, c) && *s)
@@ -83,6 +83,6 @@ char			**ft_split(char const *s, char c)
 		tab[j][i] = '\0';
 		j++;
 	}
-	tab[j] = 0;
+	tab[j] = NULL;
 	return (tab);
 }

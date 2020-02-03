@@ -43,31 +43,28 @@ typedef struct	s_cubd
 
 typedef struct	s_map
 {
-	int		res_x;
-	int		res_y;
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	char	*sprite;
-	int		sol;
-	int		ciel;	
+	int			res_x;
+	int			res_y;
+	char		*no;
+	char		*so;
+	char		*we;
+	char		*ea;
+	char		*sprite;
+	int			floor;
+	int			ceil;
 }				t_map;
 
-typedef struct s_infos
-{
-	int r;
-	int	no;
-	int	so;
-	int we;
-	int ea;
-	int	s;
-
-}
 int     		ft_map(t_map *map, char *ac_map);
 int				ft_strlen(char *str);
 int				ft_strcmp(char *s1, char *s2);
 void			ft_putstr_fd(char *s, int fd);
 int     		check_args(int argc, char **argv);
-char			**ft_split(char const *s, char c);
+char			**ft_split(char *s, char c);
+int				ft_atoi(char *nptr);
+int				ft_errors(int err);
+int				free_infos(char **str, int ret);
+int				ft_free(char **str, int ret, int fd);
+void			ft_init_map(t_map *map);
+int				ft_tablen(char **str);
+char			*ft_strdup(char *s1);
 #endif
