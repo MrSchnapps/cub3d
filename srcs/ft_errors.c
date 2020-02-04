@@ -25,26 +25,24 @@ int     check_args(int argc, char **argv)
 
 int     ft_errors(int err)
 {
-	ft_printf_fd(2, "Error\n");
-	if (err == 1)
-		ft_printf_fd(2, "No such file or directory\n");
-	else if (err == 2)
-		ft_printf_fd(2, "Error reading file\n");
-	else if (err == 3)
-		ft_printf_fd(2, "Too much arguments\n");
-	else if (err == 4)
-		ft_printf_fd(2, "Unkown option\n");
-	else if (err == 5)
-		ft_printf_fd(2, "Not enough arguments\n");
-	else if (err == 6)
-		ft_printf_fd(2, "Please enter a file in format \"*.cub\"\n");
-	else if (err == 7)
-		ft_printf_fd(2, "Bad information in your map file\n");
-	else if (err == 8)
-		ft_printf_fd(2, "Error in resolution value\n");
-
-	else if (err == 10)
-		ft_printf_fd(2, "Memory error\n");
+	fpf(2, "Error\n");
+	(err == 1) ? fpf(2, "No such file or directory.\n") : 0;
+	(err == 2) ? fpf(2, "Error reading file.\n"): 0;
+	(err == 3) ? fpf(2, "Too much arguments.\n") : 0;
+	(err == 4) ? fpf(2, "Unkown option.\n") : 0;
+	(err == 5) ? fpf(2, "Not enough arguments.\n") : 0;
+	(err == 6) ? fpf(2, "Enter a file in format \"*.cub\".\n") : 0;
+	(err == 7) ? fpf(2, "Unkown information(s) in your map file.\n") : 0;
+	(err == 8) ? fpf(2, "Error in resolution value.\n") : 0;
+	(err == 9) ? fpf(2, "Error in floor color value.\n") : 0;
+	(err == 10) ? fpf(2, "Error in ceil color value.\n") : 0;
+	(err == 11) ? fpf(2, "Memory error.\n") : 0;
+	(err == 12) ? fpf(2, "Missing map in map file.\n") : 0;
+	(err == 13) ? fpf(2, "To few lines in your map.\n") : 0;
+	(err == 14) ? fpf(2, "Wall missing in the map borders.\n") : 0;
+	(err == 15) ? fpf(2, "Lines are not the same size or too small\n") : 0;
+	(err == 16) ? fpf(2, "Too much start position in your map\n") : 0;
+	(err == 17) ? fpf(2, "Unkown value in your map\n") : 0;
 	exit(1);
 	return (1);
 }

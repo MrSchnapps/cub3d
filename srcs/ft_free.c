@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:46:24 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/03 19:03:29 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/04 18:19:20 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 int     ft_free(char **str, int ret, int fd)
 {
-	if (str)
-	{
-		if (*str)
-			free(*str);
-		*str = NULL;
-	}
+
+	if (*str)
+		free(*str);
+	*str = NULL;
 	if (fd)
 		close(fd);
 	return (ret);
 }
 
-int		free_infos(char **str, int ret)
+int		f_i(char **str, int ret)
 {
 	int i;
 

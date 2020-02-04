@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 20:32:11 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/01/29 14:25:25 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/04 11:54:58 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct	s_sizenum
 	int size;
 }				t_sizenum;
 
-int				ft_printf_fd(unsigned int fd, const char *format, ...);
+int				fpf(unsigned int fd, const char *format, ...);
 char			*ft_utoa_pf(unsigned int nbr, t_plist *s);
 char			*ft_itoa_pf(int nbr, t_plist *s);
 char			*ft_llutoah_pf(long long unsigned int nbr, char *base);

@@ -1,10 +1,22 @@
 
-R 1920 160
+R 1920    160
 
 NO ../textures/t1.png
 
 WE ../textures/t3.png
 
+F  201,255,0
+
 EA ../textures/t3.png
 
 SO ../textures/t3.png
+
+C 200,40,20
+
+S ./textures/t4.png
+
+
+1111111111111111111
+1100000000000000001
+1000110010N01010111
+1111111111111111111

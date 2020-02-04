@@ -45,14 +45,18 @@ int		ft_atoi(char *nptr)
 	return ((int)(nb * sign));
 }
 
-int		ft_tablen(char **str)
+int		ft_tablen(char **str, int j)
 {
 	int i;
 
 	i = 0;
 	if (!str)
 		return (0);
-	while (str[i])
-		i++;
+	if (j == 1)
+		while (str[i])
+			i++;
+	if (j == 2)
+		while (str[i] && ft_strcmp(str[i], ""))
+			i++;
 	return (i);
 }

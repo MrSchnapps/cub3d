@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 12:38:54 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/03 18:13:37 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/04 18:04:32 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@ static int		ft_string(char const *s, char c)
 	int m;
 
 	m = 0;
-	while (!ft_check_char(*s++, c) && *s)
+	if (!s)
+		return (0);
+	while (!ft_check_char(*s, c) && *s)
+	{
+		s++;
 		m++;
+	}
 	return (m);
 }
 
@@ -34,6 +39,8 @@ static int		ft_memory(char const *s, char c)
 	int	m;
 
 	m = 0;
+	if (!s)
+		return (0);
 	while (ft_check_char((char)*s, c) && *s)
 		s++;
 	while (*s)
@@ -71,7 +78,7 @@ char			**ft_split(char *s, char c)
 	j = 0;
 	while (*s && !(i = 0))
 	{
-		if (!(tab[j] = (char *)malloc((ft_string(s, c) + 1) * 1)))
+		if (!(tab[j] = (char *)malloc((ft_string(s, c) + 1))))
 		{
 			ft_free_split(tab, j);
 			return (0);

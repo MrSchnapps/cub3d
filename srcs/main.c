@@ -67,6 +67,16 @@ int ft_key_event(int a, t_cubd *s)
 	return (1);
 }*/
 
+void	free_struct(t_map map)
+{
+	free(map.no);
+	free(map.we);
+	free(map.ea);
+	free(map.so);
+	free(map.sprite);
+	f_i(map.m, 0);	
+}
+
 int main(int argc, char **argv)
 {
 	//t_cubd 	s;
@@ -75,12 +85,36 @@ int main(int argc, char **argv)
 	//int		size_x;		
 	//int		size_y;
 	//char 	*title;
+	int i;
 	
 	if (check_args(argc, argv) < 0)
 		return (1);
 	ft_init_map(&m);
 	if ((err = ft_map(&m, argv[1])))
+	{
+		free_struct(m);
 		return(ft_errors(err));
+	}
+	free_struct(m);
+
+	
+	printf("res_x ==> |%d|\n", m.res_x);
+	printf("res_y ==> |%d|\n", m.res_y);
+	printf("no    ==> |%s|\n", m.no);
+	printf("so    ==> |%s|\n", m.so);
+	printf("we    ==> |%s|\n", m.we);
+	printf("ea    ==> |%s|\n", m.ea);
+	printf("sprit ==> |%s|\n", m.sprite);
+	printf("floor ==> |%d|\n", m.floor);
+	printf("ceil  ==> |%d|\n", m.ceil);
+	i = 0;
+	printf("map :\n");
+	while(m.m[i])
+		printf("|%s|\n", m.m[i++]);
+	printf("x     ==> |%d|\n", m.x);
+	printf("y     ==> |%d|\n", m.y);
+	printf("start ==> |%c|\n", m.start);
+	//system("leaks exec.out");
 	/*title = "Cub3D";
 	size_x = 800;
 	size_y = 800;

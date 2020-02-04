@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:37:59 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/01/29 14:20:40 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/04 11:54:52 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int		ft_flags(va_list ap, const char *f, t_plist *s)
 	return (ft_flags_more(ap, f, s));
 }
 
-int				ft_printf_fd(unsigned int fd, const char *format, ...)
+int				fpf(unsigned int fd, const char *format, ...)
 {
 	int		j;
 	t_plist	s;

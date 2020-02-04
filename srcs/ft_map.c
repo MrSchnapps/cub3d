@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:47:37 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/03 21:36:26 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/04 21:44:07 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,78 +24,74 @@ int		parse_res(char **split, t_map *map)
 	while (split[2][++i])
 		if (split[2][i] < 48 || split[2][i] > 57)
 			return (-1);
-	if ((map->res_x = atoi(split[1])) > 2560)
+	if ((map->res_x = ft_atoi(split[1])) > 2560)
 		map->res_x = 2560;
-	if ((map->res_y = atoi(split[1])) > 1440)
+	if ((map->res_y = ft_atoi(split[1])) > 1440)
 		map->res_y = 1440;
 	return (1);
 }
 
+int		parse_color(char *str, int *nb)
+{
+	short	tab[3];
+	int		i;
+	int		j;
+	
+	i = 0;
+	j = -1;
+	while (++j < 3 && str[i])
+	{
+		tab[j] = ft_atoi(&str[i]);
+		while (str[i] != ',' && str[i])
+			if (str[i] < 48 || str[i++] > 57)
+				return (-1);
+		if (j < 2 && str[i++] == ',')
+			if (str[i] == ',' && (i += 1))
+				return (-1);
+	}
+	if (str[i] || j < 2 || tab[0] > 255 || tab[1] > 255 || tab[2] > 255)
+		return (-1);
+	*nb = (tab[0] * 256 * 256) + (tab[1] * 256) + tab[2];
+	return (1);
+}
 
 int		parse_infos(char *line, t_map *m)
 {
-	char	**split;
+	char	**s;
 	int		i;
 
-	i = 0;
-	if (!line || !(split = ft_split(line, ' ')))
-		return (-1);
-	i = ft_tablen(split);
+	if (!line || !(s = ft_split(line, ' ')))
+		return (7);
+	i = ft_tablen(s, 1);
 	if (i < 2 || i > 3)
-		return (-1);
-	if (!ft_strcmp(split[0], "R") && i == 3 && m->res_x == -1 && m->res_y == -1)
-	{
-		if (parse_res(split, m) < 0)
-			return (free_infos(split, 8));
-	}
-	else if (!ft_strcmp(split[0], "NO") && !m->no && i == 2)
-	{
-		if (!(m->no = ft_strdup(split[1])))
-			return (free_infos(split, 10));
-	}
-	else if (!ft_strcmp(split[0], "SO") && i == 2 && !m->so)
-	{
-		if (!(m->so = ft_strdup(split[1])))
-			return (free_infos(split, 10));
-	}
-	else if (!ft_strcmp(split[0], "WE") && i == 2 && !m->we)
-	{
-		if (!(m->we = ft_strdup(split[1])))
-			return (free_infos(split, 10));
-	}
-	else if (!ft_strcmp(split[0], "EA") && i == 2 && !m->ea)
-	{
-		if (!(m->ea = ft_strdup(split[1])))
-			return (free_infos(split, 10));
-	}
-	else if (!ft_strcmp(split[0], "S") && i == 2 && !m->sprite)
-	{
-		if (!(m->sprite = ft_strdup(split[1])))
-			return (free_infos(split, 10));
-	}
-
-	//modif
-	/*else if (!ft_strcmp(split[0], "F") && i == 2 && m->floor == -1)
-	{
-		if (parse_color(split, m)
-			return (free_infos(split, 10));
-	}*/
-	else
-		return (free_infos(split, 7));
-	return (free_infos(split, 0));
+		return (7);
+	if (!ft_strcmp(s[0], "R") && i == 3 && m->res_x == -1 && m->res_y == -1)
+		return ((parse_res(s, m) < 0) ? f_i(s, 8) : f_i(s, 0));
+	else if (!ft_strcmp(s[0], "NO") && i == 2 && !m->no)
+		return ((!(m->no = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+	else if (!ft_strcmp(s[0], "SO") && i == 2 && !m->so)
+		return ((!(m->so = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+	else if (!ft_strcmp(s[0], "WE") && i == 2 && !m->we)
+		return ((!(m->we = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+	else if (!ft_strcmp(s[0], "EA") && i == 2 && !m->ea)
+		return ((!(m->ea = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+	else if (!ft_strcmp(s[0], "S") && i == 2 && !m->sprite)
+		return ((!(m->sprite = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+	else if (!ft_strcmp(s[0], "F") && i == 2 && m->floor == -1)
+		return ((parse_color(s[1], &m->floor) < 0) ? f_i(s, 9) : f_i(s, 0));
+	else if (!ft_strcmp(s[0], "C") && i == 2 && m->ceil == -1)
+		return ((parse_color(s[1], &m->ceil) < 0) ? f_i(s, 10) : f_i(s, 0));
+	return (f_i(s, 7));
 }
 
-int		ft_map(t_map *map, char *ac_map)
+int		ft_read_map(int fd, t_map *map)
 {
-	int		fd;
 	int		i;
 	int		ret;
 	int		ret_infos;
 	char	*line;
 
 	line = NULL;
-	if ((fd = open(ac_map, O_RDONLY)) < 0)
-		return (1);
 	i = -1;
 	ret = 1;
 	while (++i < NB_INFOS && ret > 0)
@@ -110,6 +106,19 @@ int		ft_map(t_map *map, char *ac_map)
 			return (ft_free(&line, ret_infos, fd));
 		ft_free(&line, 0, 0);
 	}
-	ret = (i == NB_INFOS) ? 0 : ret;
-	return (ft_free(&line, ret, fd));
+	if (i !=  NB_INFOS)
+		return (ft_free(&line, ret, fd));
+	return (parse_map(fd, map));
+}
+
+int		ft_map(t_map *map, char *ac_map)
+{
+	int fd;
+	int	ret;
+
+	if ((fd = open(ac_map, O_RDONLY)) < 0)
+		return (1);
+	ret = ft_read_map(fd, map);
+	close(fd);
+	return (ret);
 }

@@ -52,19 +52,23 @@ typedef struct	s_map
 	char		*sprite;
 	int			floor;
 	int			ceil;
+	char		**m;
+	int			x;
+	int			y;
+	char		start;
 }				t_map;
 
-int     		ft_map(t_map *map, char *ac_map);
+int				ft_map(t_map *map, char *ac_map);
 int				ft_strlen(char *str);
 int				ft_strcmp(char *s1, char *s2);
-void			ft_putstr_fd(char *s, int fd);
 int     		check_args(int argc, char **argv);
 char			**ft_split(char *s, char c);
 int				ft_atoi(char *nptr);
 int				ft_errors(int err);
-int				free_infos(char **str, int ret);
+int				f_i(char **str, int ret);
 int				ft_free(char **str, int ret, int fd);
 void			ft_init_map(t_map *map);
-int				ft_tablen(char **str);
+int				ft_tablen(char **str, int j);
 char			*ft_strdup(char *s1);
+int				parse_map(int fd, t_map *map);
 #endif

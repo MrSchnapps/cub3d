@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:19:17 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/03 19:19:33 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/04 22:30:58 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,6 @@ void	ft_init_map(t_map *map)
 	map->sprite = NULL;
 	map->floor = -1;
 	map->ceil = -1;
+	map->m = NULL;
+	map->start = 0;
 }
