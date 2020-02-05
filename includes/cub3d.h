@@ -1,5 +1,5 @@
-#ifndef CUBD_H
-# define CUBD_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdio.h>
 # include <string.h>
@@ -9,7 +9,7 @@
 # include <errno.h>
 # include "../minilibx_opengl/mlx.h"
 # include "get_next_line.h"
-# include "../includes/ft_printf.h"
+# include "ft_printf.h"
 
 # define KPRESS 2
 # define KCLICK	3
@@ -33,14 +33,6 @@
 # define J 38
 # define NB_INFOS 8
 
-typedef struct	s_cubd
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	int		x;
-	int		y;
-}				t_cubd;
-
 typedef struct	s_map
 {
 	int			res_x;
@@ -56,9 +48,24 @@ typedef struct	s_map
 	int			x;
 	int			y;
 	char		start;
+	float		s_x;
+	float		s_y;
 }				t_map;
 
-int				ft_map(t_map *map, char *ac_map);
+typedef struct	s_cub
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	int		x;
+	int		y;
+	int		x_test;
+	int		y_test;
+	char	*t;
+	void	*img_ptr;
+	t_map	*m;
+}				t_cub;
+
+int				ft_map(t_map *map, t_cub *c, char *ac_map);
 int				ft_strlen(char *str);
 int				ft_strcmp(char *s1, char *s2);
 int     		check_args(int argc, char **argv);

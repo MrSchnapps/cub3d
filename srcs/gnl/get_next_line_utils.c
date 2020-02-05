@@ -6,11 +6,11 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:14:04 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/01/28 18:43:07 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/05 13:06:20 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "get_next_line.h"
 
 size_t		ft_strlen_g(const char *s)
 {

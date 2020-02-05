@@ -6,19 +6,14 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:42:05 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/04 22:41:43 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/05 16:59:18 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cubd.h"
+#include "cub3d.h"
 
-int		check_line(t_map *m)
+int		check_line(t_map *m, int i, int j, int len)
 {
-	int i;
-	int j;
-	int	len;
-
-	i = 0;
 	while ((j = 1) && ++i < m->y - 1)
 	{
 		if ((len = ft_strlen(m->m[i])) < 3 || m->m[i][0] != '1' || len != m->x)
@@ -29,7 +24,11 @@ int		check_line(t_map *m)
 					|| m->m[i][j] == 'W')
 			{
 				if (!m->start)
+				{
 					m->start = m->m[i][j];
+					m->s_x = j;
+					m->s_y = i;
+				}
 				else
 					return (16);
 			}
@@ -48,6 +47,8 @@ int		check_map(t_map *map)
 	i = 0;
 	if ((map->y = ft_tablen(map->m, 2)) < 3)
 		return (13);
+	if (ft_tablen(map->m, 1) != map->y)
+		return (19);
 	while (map->m[0][i])
 		if (map->m[0][i++] != '1')
 			return (14);
@@ -59,7 +60,9 @@ int		check_map(t_map *map)
 			return (14);
 	if (i != map->x)
 		return (15);
-	return (check_line(map));
+	if ((i = check_line(map, 0, 0, 0)))
+		return (i);
+	return ((map->start == 0) ? 18 : 0);
 }
 
 char	**ft_append(char **m, char *line)
@@ -114,8 +117,6 @@ int     parse_map(int fd, t_map *map)
 	char	*line;
 	int     ret;
 	
-	int i;
-	i = 0;
 	ret = 1;
 	line = NULL;
 	while (!line || (!ft_strcmp(line, "") && ret > 0))
@@ -130,7 +131,5 @@ int     parse_map(int fd, t_map *map)
 		return (ft_free(&line, ret, fd));
 	if ((ret = check_map(map)))
 		return (ft_free(&line, ret, fd));
-	/*while (map->m[i])
-		printf("|%s|\n", map->m[i++]);*/
 	return (ft_free(&line, 0, fd));
 }

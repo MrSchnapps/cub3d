@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_str.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 17:46:24 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/04 18:19:20 by judecuyp         ###   ########.fr       */
+/*   Created: 2020/02/03 20:03:20 by judecuyp          #+#    #+#             */
+/*   Updated: 2020/02/05 16:59:16 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cubd.h"
+#include "cub3d.h"
 
-int     ft_free(char **str, int ret, int fd)
+char	*ft_strdup(char *s1)
 {
+	char	*str;
+	char	*ptrstr;
 
-	if (*str)
-		free(*str);
-	*str = NULL;
-	if (fd)
-		close(fd);
-	return (ret);
-}
-
-int		f_i(char **str, int ret)
-{
-	int i;
-
-	i = 0;
-	if (str)
-	{
-		while (str[i])
-		{
-			if (str[i])
-				free(str[i]);
-			i++;
-		}
-		free(str);
-	}
-	return (ret);
+	if (!(str = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char))))
+		return (NULL);
+	ptrstr = str;
+	while (*s1)
+		*str++ = *s1++;
+	*str = '\0';
+	return (ptrstr);
 }

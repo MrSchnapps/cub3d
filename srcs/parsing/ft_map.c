@@ -6,13 +6,13 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:47:37 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/04 21:44:07 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/05 17:04:54 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cubd.h"
+#include "cub3d.h"
 
-int		parse_res(char **split, t_map *map)
+int		parse_res(char **split, t_cub *c)
 {
 	int i;
 
@@ -24,10 +24,10 @@ int		parse_res(char **split, t_map *map)
 	while (split[2][++i])
 		if (split[2][i] < 48 || split[2][i] > 57)
 			return (-1);
-	if ((map->res_x = ft_atoi(split[1])) > 2560)
-		map->res_x = 2560;
-	if ((map->res_y = ft_atoi(split[1])) > 1440)
-		map->res_y = 1440;
+	if ((c->x = ft_atoi(split[1])) > 2560)
+		c->x = 2560;
+	if ((c->y = ft_atoi(split[2])) > 1440)
+		c->y = 1440;
 	return (1);
 }
 
@@ -55,7 +55,7 @@ int		parse_color(char *str, int *nb)
 	return (1);
 }
 
-int		parse_infos(char *line, t_map *m)
+int		parse_infos(char *line, t_map *m, t_cub *c)
 {
 	char	**s;
 	int		i;
@@ -66,7 +66,7 @@ int		parse_infos(char *line, t_map *m)
 	if (i < 2 || i > 3)
 		return (7);
 	if (!ft_strcmp(s[0], "R") && i == 3 && m->res_x == -1 && m->res_y == -1)
-		return ((parse_res(s, m) < 0) ? f_i(s, 8) : f_i(s, 0));
+		return ((parse_res(s, c) < 0) ? f_i(s, 8) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "NO") && i == 2 && !m->no)
 		return ((!(m->no = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "SO") && i == 2 && !m->so)
@@ -84,7 +84,7 @@ int		parse_infos(char *line, t_map *m)
 	return (f_i(s, 7));
 }
 
-int		ft_read_map(int fd, t_map *map)
+int		ft_read_map(int fd, t_map *map, t_cub *c)
 {
 	int		i;
 	int		ret;
@@ -102,7 +102,7 @@ int		ft_read_map(int fd, t_map *map)
 			if ((ret = get_next_line(fd, &line)) < 0)
 				return (ft_free(&line, 2, fd));
 		}
-		if ((ret_infos = parse_infos(line, map)))
+		if ((ret_infos = parse_infos(line, map, c)))
 			return (ft_free(&line, ret_infos, fd));
 		ft_free(&line, 0, 0);
 	}
@@ -111,14 +111,14 @@ int		ft_read_map(int fd, t_map *map)
 	return (parse_map(fd, map));
 }
 
-int		ft_map(t_map *map, char *ac_map)
+int		ft_map(t_map *map, t_cub *c, char *ac_map)
 {
 	int fd;
 	int	ret;
 
 	if ((fd = open(ac_map, O_RDONLY)) < 0)
 		return (1);
-	ret = ft_read_map(fd, map);
+	ret = ft_read_map(fd, map, c);
 	close(fd);
 	return (ret);
 }

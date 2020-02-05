@@ -6,11 +6,11 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 19:08:16 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/01/28 17:18:25 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/05 13:06:27 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h"
+#include "get_next_line.h"
 
 static int		ft_free(char **str, int r)
 {

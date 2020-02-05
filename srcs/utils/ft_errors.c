@@ -1,4 +1,4 @@
-#include "../includes/cubd.h"
+#include "cub3d.h"
 
 int     check_args(int argc, char **argv)
 {
@@ -43,6 +43,8 @@ int     ft_errors(int err)
 	(err == 15) ? fpf(2, "Lines are not the same size or too small\n") : 0;
 	(err == 16) ? fpf(2, "Too much start position in your map\n") : 0;
 	(err == 17) ? fpf(2, "Unkown value in your map\n") : 0;
+	(err == 18) ? fpf(2, "Missing start position\n") : 0;
+	(err == 19) ? fpf(2, "You cannot have content under the map\n") : 0;
 	exit(1);
 	return (1);
 }

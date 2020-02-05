@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_init.c                                          :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 19:19:17 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/04 22:30:58 by judecuyp         ###   ########.fr       */
+/*   Created: 2020/02/03 17:46:24 by judecuyp          #+#    #+#             */
+/*   Updated: 2020/02/05 17:00:33 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cubd.h"
+#include "cub3d.h"
 
-void	ft_init_map(t_map *map)
+int     ft_free(char **str, int ret, int fd)
 {
-	map->res_x = -1;
-	map->res_y = -1;
-	map->no = NULL;
-	map->so = NULL;
-	map->we = NULL;
-	map->ea = NULL;
-	map->sprite = NULL;
-	map->floor = -1;
-	map->ceil = -1;
-	map->m = NULL;
-	map->start = 0;
+
+	if (*str)
+		free(*str);
+	*str = NULL;
+	if (fd)
+		close(fd);
+	return (ret);
+}
+
+int		f_i(char **str, int ret)
+{
+	int i;
+
+	i = 0;
+	if (str)
+	{
+		while (str[i])
+		{
+			if (str[i])
+				free(str[i]);
+			i++;
+		}
+		free(str);
+	}
+	return (ret);
 }

@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str.c                                           :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 20:03:20 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/04 21:44:15 by judecuyp         ###   ########.fr       */
+/*   Created: 2020/02/03 19:19:17 by judecuyp          #+#    #+#             */
+/*   Updated: 2020/02/05 16:59:24 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cubd.h"
+#include "cub3d.h"
 
-char	*ft_strdup(char *s1)
+void	ft_init_map(t_map *map)
 {
-	char	*str;
-	char	*ptrstr;
-
-	if (!(str = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char))))
-		return (NULL);
-	ptrstr = str;
-	while (*s1)
-		*str++ = *s1++;
-	*str = '\0';
-	return (ptrstr);
+	map->res_x = -1;
+	map->res_y = -1;
+	map->no = NULL;
+	map->so = NULL;
+	map->we = NULL;
+	map->ea = NULL;
+	map->sprite = NULL;
+	map->floor = -1;
+	map->ceil = -1;
+	map->m = NULL;
+	map->start = 0;
+	map->x = 0;
+	map->y = 0;
+	map->s_x = 0;
+	map->s_y = 0;
 }

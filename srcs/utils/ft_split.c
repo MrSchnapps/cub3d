@@ -6,11 +6,11 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 12:38:54 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/04 18:04:32 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/05 17:00:42 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cubd.h"
+#include "cub3d.h"
 
 static int		ft_check_char(char c, char charset)
 {
