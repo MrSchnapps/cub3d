@@ -48,8 +48,12 @@ typedef struct	s_map
 	int			x;
 	int			y;
 	char		start;
-	float		s_x;
-	float		s_y;
+	double		s_x;
+	double		s_y;
+	double		dx;
+	double		dy;
+	double		px;
+	double		py;
 }				t_map;
 
 typedef struct	s_cub
@@ -58,8 +62,8 @@ typedef struct	s_cub
 	void	*win_ptr;
 	int		x;
 	int		y;
-	int		x_test;
-	int		y_test;
+	//int		x_test;
+	//int		y_test;
 	char	*t;
 	void	*img_ptr;
 	t_map	*m;

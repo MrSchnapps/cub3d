@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:47:37 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/05 17:04:54 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/06 23:11:45 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int		parse_res(char **split, t_cub *c)
 	while (split[2][++i])
 		if (split[2][i] < 48 || split[2][i] > 57)
 			return (-1);
-	if ((c->x = ft_atoi(split[1])) > 2560)
-		c->x = 2560;
-	if ((c->y = ft_atoi(split[2])) > 1440)
-		c->y = 1440;
+	if ((c->y = ft_atoi(split[1])) > 2560)
+		c->y = 2560;
+	if ((c->x = ft_atoi(split[2])) > 1440)
+		c->x = 1440;
 	return (1);
 }
 
