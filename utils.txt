@@ -10,6 +10,8 @@ https://gist.github.com/KokaKiwi/4052375
 
 https://lodev.org/cgtutor/raycasting.html
 
+https://guy-grave.developpez.com/tutoriels/jeux/doom-wolfenstein-raycasting/
+
 gc -I minilibx_opengl -framework OpenGl -framework Appkit -L ../minilibx_opengl -lmlx *.c ../gnl/*.c ../lib/libftprintf.a
 
 gc *.c ../gnl/*.c ../lib/libftprintf.a -o exec.out -I ../includes

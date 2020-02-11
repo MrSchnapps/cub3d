@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:47:37 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/06 23:11:45 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/07 14:25:35 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int		parse_res(char **split, t_cub *c)
 	while (split[2][++i])
 		if (split[2][i] < 48 || split[2][i] > 57)
 			return (-1);
-	if ((c->y = ft_atoi(split[1])) > 2560)
-		c->y = 2560;
-	if ((c->x = ft_atoi(split[2])) > 1440)
-		c->x = 1440;
+	if ((c->win_width = ft_atoi(split[1])) > 2560)
+		c->win_width = 2560;
+	if ((c->win_height = ft_atoi(split[2])) > 1440)
+		c->win_height = 1440;
 	return (1);
 }
 
@@ -65,7 +65,7 @@ int		parse_infos(char *line, t_map *m, t_cub *c)
 	i = ft_tablen(s, 1);
 	if (i < 2 || i > 3)
 		return (7);
-	if (!ft_strcmp(s[0], "R") && i == 3 && m->res_x == -1 && m->res_y == -1)
+	if (!ft_strcmp(s[0], "R") && i == 3 && c->win_height == -1 && c->win_width == -1)
 		return ((parse_res(s, c) < 0) ? f_i(s, 8) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "NO") && i == 2 && !m->no)
 		return ((!(m->no = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));

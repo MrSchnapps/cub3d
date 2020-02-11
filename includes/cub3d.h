@@ -10,6 +10,7 @@
 # include "../minilibx_opengl/mlx.h"
 # include "get_next_line.h"
 # include "ft_printf.h"
+# include <math.h>
 
 # define KPRESS 2
 # define KCLICK	3
@@ -35,8 +36,6 @@
 
 typedef struct	s_map
 {
-	int			res_x;
-	int			res_y;
 	char		*no;
 	char		*so;
 	char		*we;
@@ -45,8 +44,8 @@ typedef struct	s_map
 	int			floor;
 	int			ceil;
 	char		**m;
-	int			x;
-	int			y;
+	int			m_w;
+	int			m_h;
 	char		start;
 	double		s_x;
 	double		s_y;
@@ -60,8 +59,8 @@ typedef struct	s_cub
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	int		x;
-	int		y;
+	int		win_width;
+	int		win_height;
 	//int		x_test;
 	//int		y_test;
 	char	*t;
@@ -78,7 +77,7 @@ int				ft_atoi(char *nptr);
 int				ft_errors(int err);
 int				f_i(char **str, int ret);
 int				ft_free(char **str, int ret, int fd);
-void			ft_init_map(t_map *map);
+void			ft_init_map(t_cub *c, t_map *map);
 int				ft_tablen(char **str, int j);
 char			*ft_strdup(char *s1);
 int				parse_map(int fd, t_map *map);

@@ -6,16 +6,18 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:19:17 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/06 14:16:08 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/11 16:56:51 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_init_map(t_map *map)
+void	ft_init_map(t_cub *c, t_map *map)
 {
-	map->res_x = -1;
-	map->res_y = -1;
+	//map->res_x = -1;
+	//map->res_y = -1;
+	c->win_width = -1;
+	c->win_height = -1;
 	map->no = NULL;
 	map->so = NULL;
 	map->we = NULL;
@@ -25,12 +27,12 @@ void	ft_init_map(t_map *map)
 	map->ceil = -1;
 	map->m = NULL;
 	map->start = 0;
-	map->x = 0;
-	map->y = 0;
+	map->m_w = 0;
+	map->m_h = 0;
 	map->s_x = 0;
 	map->s_y = 0;
-	map->dx = -1;
-	map->dy = 0;
+	map->dx = 1;
+	map->dy = -1;
 	map->px = 0;
 	map->py = 0.66;
 }

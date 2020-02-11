@@ -1,0 +1,25 @@
+
+R    640  480
+
+NO ../textures/t1.png
+
+WE ../textures/t3.png
+
+F   201,255,0
+
+EA ../textures/t3.png
+
+SO  ../textures/t3.png
+
+C 200,40,20
+
+S ./textures/t4.png
+
+11111111
+10000001
+10000E01
+11110001
+10000001
+11001111
+11000001
+11111111
