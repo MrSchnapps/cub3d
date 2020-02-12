@@ -17,6 +17,10 @@
 # define MCLICK	4
 # define MPRESS 5
 # define MMOVE 	6
+# define W 13
+# define S 1
+# define A 0
+# define D 2
 # define DROITE 124
 # define GAUCHE 123
 # define HAUT 126
@@ -31,6 +35,10 @@
 # define BLUE 255
 # define GREEN 65280
 # define ORANGE 16753664
+# define ORANGE_CLAIR 16764672
+# define GRIS 10855845
+# define MARRON 13143808
+# define CYAN 55024
 # define J 38
 # define NB_INFOS 8
 
@@ -55,6 +63,29 @@ typedef struct	s_map
 	double		py;
 }				t_map;
 
+typedef struct s_calc
+{
+	int		x;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	double	sideDistX;
+    double	sideDistY;
+	double	deltaDistX;
+    double	deltaDistY;
+    double	perpWallDist;
+	int		stepX;
+    int		stepY;
+	int		hit;
+	int		side;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	int		done;
+}				t_calc;
+
 typedef struct	s_cub
 {
 	void	*mlx_ptr;
@@ -65,6 +96,7 @@ typedef struct	s_cub
 	//int		y_test;
 	char	*t;
 	void	*img_ptr;
+	t_calc	clc;
 	t_map	*m;
 }				t_cub;
 

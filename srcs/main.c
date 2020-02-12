@@ -21,19 +21,6 @@ int	ft_exit_esc(t_cub *s)
 	return (1);
 }
 
-int ft_key_event(int a, t_cub *s)
-{
-	if (a == ESC)
-		ft_exit_esc(s);
-	/*if ((a >= 123 && a <= 126) || a == 0)
-		ft_draw(s, a);*/
-	/*if (a == J)
-		ft_write(s);*/
-	else 
-		printf("touch pressee: %d\n", a);
-	return (1);
-}
-
 void	free_struct(t_map *map)
 {
 	free(map->no);
@@ -55,20 +42,32 @@ void vertLine(int x, int drawStart, int drawEnd, t_cub *c, int side)
 {
 	int	*pix;
 	int	id;
-	
+	int i;
+
+	i = 0;
 	pix = (int *)mlx_get_data_addr(c->img_ptr, &id, &id, &id);
-	printf("\nStart ==> |%d|\nEnd ==> |%d|\n", drawStart, drawEnd);
+	//printf("\nStart ==> |%d|\nEnd ==> |%d|\n", drawStart, drawEnd);
+	while (i < drawStart)
+	{
+		pix[i * c->win_width + x] = CYAN;
+		i++;
+	}
 	while (drawStart < drawEnd)
 	{
 		//if (x < c->win_width && drawStart < c->win_height)
 		//{	
-			if (side == 1)
-				pix[drawStart * c->win_width + x] = ORANGE / 2;
+			if (side == 0)
+				pix[drawStart * c->win_width + x] = GRIS;
 			else
-				pix[drawStart * c->win_width + x] = ORANGE;
+				pix[drawStart * c->win_width + x] = ORANGE_CLAIR;
 			//drawStart += c->win_width;
 			drawStart++;
 		//}
+	}
+	while (drawEnd < c->win_height)
+	{
+		pix[drawEnd * c->win_width + x] = MARRON;
+		drawEnd++;
 	}
 	
 }
@@ -76,7 +75,7 @@ void vertLine(int x, int drawStart, int drawEnd, t_cub *c, int side)
 int		draw_map(t_cub *c)
 {
 	int		x;
-	double	camera_x;
+	/*double	camera_x;
 	double	ray_dir_x;
 	double	ray_dir_y;
 	int		map_x;
@@ -93,80 +92,141 @@ int		draw_map(t_cub *c)
 	int		lineHeight;
 	int		drawStart;
 	int		drawEnd;
-	int		done;
+	int		done;*/
 
-	done = 1;
+	if (!(c->img_ptr = mlx_new_image(c->mlx_ptr, c->win_width, c->win_height)))
+		exit(1);
+	c->clc.done = 1;
 	x = -1;
 	while (++x < c->win_width)
 	{
-		camera_x = 2 * x / (double)c->win_width - 1;
-		ray_dir_x = c->m->dx + c->m->px * camera_x;
-		ray_dir_y = c->m->dy + c->m->py * camera_x;
+		c->clc.camera_x = 2 * x / (double)c->win_width - 1;
+		c->clc.ray_dir_x = c->m->dx + c->m->px * c->clc.camera_x;
+		c->clc.ray_dir_y = c->m->dy + c->m->py * c->clc.camera_x;
 
-		map_x = (int)c->m->s_y;
-		map_y = (int)c->m->s_x;
+		c->clc.map_x = (int)c->m->s_y;
+		c->clc.map_y = (int)c->m->s_x;
 
-		deltaDistX = fabs(1 / ray_dir_x);
-		deltaDistY = fabs(1 / ray_dir_y);
+		c->clc.deltaDistX = fabs(1 / c->clc.ray_dir_x);
+		c->clc.deltaDistY = fabs(1 / c->clc.ray_dir_y);
 		//deltaDistX = (ray_dir_x == 0) ? 0 : ((ray_dir_x == 0) ? 1 : fabs(1 / ray_dir_x));
      	//deltaDistY = (ray_dir_y == 0) ? 0 : ((ray_dir_y == 0) ? 1 : fabs(1 / ray_dir_y));
-		hit = 0;
-		if (ray_dir_x < 0)
+		c->clc.hit = 0;
+		if (c->clc.ray_dir_x < 0)
 		{
-			stepX = -1;
-			sideDistX = (c->m->s_y - map_x) * deltaDistX;
+			c->clc.stepX = -1;
+			c->clc.sideDistX = (c->m->s_y - c->clc.map_x) * c->clc.deltaDistX;
 		}
 		else
 		{
-			stepX = 1;
-			sideDistX = (map_x + 1.0 - c->m->s_y) * deltaDistX;
+			c->clc.stepX = 1;
+			c->clc.sideDistX = (c->clc.map_x + 1.0 - c->m->s_y) * c->clc.deltaDistX;
 		}
-		if (ray_dir_y < 0)
+		if (c->clc.ray_dir_y < 0)
 		{
-			stepY = -1;
-			sideDistY = (c->m->s_x - map_y) * deltaDistY;
+			c->clc.stepY = -1;
+			c->clc.sideDistY = (c->m->s_x - c->clc.map_y) * c->clc.deltaDistY;
 		}
 		else
 		{
-			stepY = 1;
-			sideDistY = (map_y + 1.0 - c->m->s_x) * deltaDistY;
+			c->clc.stepY = 1;
+			c->clc.sideDistY = (c->clc.map_y + 1.0 - c->m->s_x) * c->clc.deltaDistY;
 		}
-		while (hit == 0)
+		while (c->clc.hit == 0)
 		{
-			if (sideDistX < sideDistY)
+			if (c->clc.sideDistX < c->clc.sideDistY)
 			{
-				sideDistX += deltaDistX;
-				map_x += stepX;
-				side = 0;
+				c->clc.sideDistX += c->clc.deltaDistX;
+				c->clc.map_x += c->clc.stepX;
+				c->clc.side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				map_y += stepY;
-				side = 1;
+				c->clc.sideDistY += c->clc.deltaDistY;
+				c->clc.map_y += c->clc.stepY;
+				c->clc.side = 1;
 			}
-			if (c->m->m[map_x][map_y] == '1') 
-				hit = 1;
+			if (c->m->m[c->clc.map_x][c->clc.map_y] == '1') 
+				c->clc.hit = 1;
 		}
 		/*printf("\nmap->x |%d|\n", map_x);
 		printf("\nmap->y |%d|\n", map_y);*/
-		if (side == 0)
-			perpWallDist = (map_x - c->m->s_y + (1 - stepY) / 2) / ray_dir_x;
+		if (c->clc.side == 0)
+			c->clc.perpWallDist = (c->clc.map_x - c->m->s_y + (1 - c->clc.stepY) / 2) / c->clc.ray_dir_x;
 		else
-			perpWallDist = (map_y - c->m->s_x + (1 - stepY) / 2) / ray_dir_y;
+			c->clc.perpWallDist = (c->clc.map_y - c->m->s_x + (1 - c->clc.stepY) / 2) / c->clc.ray_dir_y;
 
-		printf("pero ==> |%f|\n", perpWallDist);
-		lineHeight = (int)(c->win_height / perpWallDist);
-		drawStart =  (c->win_height / 2) - (lineHeight / 2);
-		if (drawStart < 0)
-			drawStart = 0;
-		drawEnd = (lineHeight / 2) + (c->win_height / 2);
-		if (drawEnd >= c->win_height)
-			drawEnd = c->win_height - 1;
-		vertLine(x, drawStart, drawEnd, c, side);
+		//printf("pero ==> |%f|\n", perpWallDist);
+		c->clc.lineHeight = (int)(c->win_height / c->clc.perpWallDist);
+		c->clc.drawStart =  (c->win_height / 2) - (c->clc.lineHeight / 2);
+		if (c->clc.drawStart < 0)
+			c->clc.drawStart = 0;
+		c->clc.drawEnd = (c->clc.lineHeight / 2) + (c->win_height / 2);
+		if (c->clc.drawEnd >= c->win_height)
+			c->clc.drawEnd = c->win_height - 1;
+		vertLine(x, c->clc.drawStart, c->clc.drawEnd, c, c->clc.side);
 	}
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img_ptr, 0, 0);
 	return (0);
+}
+
+int	ft_dep(int a, t_cub *s)
+{
+	double oldDirX;
+	double oldPlaneX;
+
+	if (a == W)
+	{
+		if(s->m->m[(int)(s->m->s_y + s->m->dx * 0.1)][(int)s->m->s_x] == '0') 
+			s->m->s_y += s->m->dx * 0.1;
+      	if(s->m->m[(int)s->m->s_y][(int)(s->m->s_x + s->m->dy * 0.1)] == '0') 
+		  	s->m->s_x += s->m->dy * 0.1;
+	}
+	if (a == S)
+	{
+		if(s->m->m[(int)(s->m->s_y - s->m->dx * 0.1)][(int)s->m->s_x] == '0') 
+			s->m->s_y -= s->m->dx * 0.1;
+      	if(s->m->m[(int)s->m->s_y][(int)(s->m->s_x - s->m->dy * 0.1)] == '0') 
+		  	s->m->s_x -= s->m->dy * 0.1;
+	}
+	if (a == D)
+    {
+      //both camera direction and camera plane must be rotated
+      oldDirX = s->m->dx;
+      s->m->dx = s->m->dx * cosf(-0.1) - s->m->dy * sinf(-0.1);
+      s->m->dy = oldDirX * sinf(-0.1) + s->m->dy * cosf(-0.1);
+      oldPlaneX = s->m->px;
+      s->m->px = s->m->px * cosf(-0.1) - s->m->py * sinf(-0.1);
+      s->m->py = oldPlaneX * sinf(-0.1) + s->m->py * cosf(-0.1);
+    }
+	if (a == A)
+    {
+      //both camera direction and camera plane must be rotated
+      oldDirX = s->m->dx;
+      s->m->dx = s->m->dx * cosf(0.1) - s->m->dy * sinf(0.1);
+      s->m->dy = oldDirX * sinf(0.1) + s->m->dy * cosf(0.1);
+      oldPlaneX = s->m->px;
+      s->m->px = s->m->px * cosf(0.1) - s->m->py * sinf(0.1);
+      s->m->py = oldPlaneX * sinf(0.1) + s->m->py * cosf(0.1);
+    }
+	//mlx_destroy_window (s->mlx_ptr, s->img_ptr);
+	draw_map(s);
+	return (1);
+}
+
+int ft_key_event(int a, t_cub *s)
+{
+	if (a == ESC)
+		ft_exit_esc(s);
+	/*if ((a >= 123 && a <= 126) || a == 0)
+		ft_draw(s, a);*/
+	/*if (a == J)
+		ft_write(s);*/
+	if (a == 13 || a == 0 || a == 1 || a == 2)
+		ft_dep(a, s);
+	else 
+		printf("touch pressee: %d\n", a);
+	return (1);
 }
 
 int		main(int argc, char **argv)
@@ -213,15 +273,12 @@ int		main(int argc, char **argv)
 	//m.s_y = 1.2;
 	//c.x_test = 0;
 	//c.y_test = 0;
-	printf("\ncoucoucoucocucucoucou\n");
 	if (!(c.mlx_ptr = mlx_init()))
 		exit(1);
 	if (!(c.win_ptr = mlx_new_window(c.mlx_ptr, c.win_width, c.win_height, c.t)))
 		exit(1);
-	if (!(c.img_ptr = mlx_new_image(c.mlx_ptr, c.win_width, c.win_height)))
-		exit(1);
-	//draw_map(&c);	
-	mlx_loop_hook(c.mlx_ptr, draw_map, &c);
+	draw_map(&c);	
+	//mlx_loop_hook(c.mlx_ptr, draw_map, &c);
 	mlx_hook(c.win_ptr, KPRESS, 0, ft_key_event, &c);
 	//Close the window with the button
 	mlx_hook(c.win_ptr, 17, 0, ft_exit_button, &c);
