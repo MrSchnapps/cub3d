@@ -19,3 +19,27 @@ gc *.c ../gnl/*.c ../lib/libftprintf.a -o exec.out -I ../includes
 gc main.c gnl/*.c ../lib/libftprintf.a parsing/*.c utils/*.c -o exec.out -I ../includes
 
 gc -I minilibx_opengl -framework OpenGl -framework Appkit -L ../minilibx_opengl -lmlx *.c gnl/*.c ../lib/libftprintf.a parsing/*.c utils/*.c -o Cub3D -I ../includes
+
+NORD
+dx = -1
+dy = 0 
+px = 0
+py = 0.66
+
+SUD
+dx = 1
+dy = 0
+px = 0
+py = -0.66
+
+EST
+dx = 0
+dy = 1
+px = 0.66
+py = 0
+
+OUEST
+dx = 0
+dy = -1
+px = -0.66
+py = 0

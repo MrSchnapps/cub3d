@@ -152,7 +152,7 @@ int		draw_map(t_cub *c)
 		/*printf("\nmap->x |%d|\n", map_x);
 		printf("\nmap->y |%d|\n", map_y);*/
 		if (c->clc.side == 0)
-			c->clc.perpWallDist = (c->clc.map_x - c->m->s_y + (1 - c->clc.stepY) / 2) / c->clc.ray_dir_x;
+			c->clc.perpWallDist = (c->clc.map_x - c->m->s_y + (1 - c->clc.stepX) / 2) / c->clc.ray_dir_x;
 		else
 			c->clc.perpWallDist = (c->clc.map_y - c->m->s_x + (1 - c->clc.stepY) / 2) / c->clc.ray_dir_y;
 
@@ -198,6 +198,11 @@ int	ft_dep(int a, t_cub *s)
       oldPlaneX = s->m->px;
       s->m->px = s->m->px * cosf(-0.1) - s->m->py * sinf(-0.1);
       s->m->py = oldPlaneX * sinf(-0.1) + s->m->py * cosf(-0.1);
+	  printf("\ndx ==> |%f|\n", s->m->dx);
+	  printf("\ndy ==> |%f|\n", s->m->dy);
+	  printf("\npx ==> |%f|\n", s->m->px);
+	  printf("\npy ==> |%f|\n", s->m->py);
+	  printf("\n----------------------------------\n");
     }
 	if (a == A)
     {

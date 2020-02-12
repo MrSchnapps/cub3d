@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:19:17 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/12 16:51:12 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/12 22:00:29 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	ft_init_map(t_cub *c, t_map *map)
 	map->m_h = 0;
 	map->s_x = 0;
 	map->s_y = 0;
-	map->dx = -1;
-	map->dy = 0;
-	map->px = 0;
-	map->py = 0.66;
+	map->dx = 0;
+	map->dy = -1;
+	map->px = -0.66;
+	map->py = 0;
 }
