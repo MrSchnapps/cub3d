@@ -6,11 +6,21 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:46:24 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/05 17:00:33 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:52:31 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_struct(t_map *map)
+{
+	free(map->no);
+	free(map->we);
+	free(map->ea);
+	free(map->so);
+	free(map->sprite);
+	f_i(map->m, 0);	
+}
 
 int     ft_free(char **str, int ret, int fd)
 {

@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:42:05 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/07 14:09:57 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:16:43 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ int		check_line(t_map *m, int i, int j, int l)
 			{
 				if (!m->start)
 				{
+					init_nsew(m, i, j);
 					m->start = m->m[i][j];
-					m->s_x = j;
-					m->s_y = i;
+					m->pos_x = j;
+					m->pos_y = i;
 				}
 				else
 					return (16);

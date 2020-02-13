@@ -39,6 +39,8 @@
 # define GRIS 10855845
 # define MARRON 13143808
 # define CYAN 55024
+# define POURPRE 10884887
+# define BRUN 9788928
 # define J 38
 # define NB_INFOS 8
 
@@ -55,8 +57,8 @@ typedef struct	s_map
 	int			m_w;
 	int			m_h;
 	char		start;
-	double		s_x;
-	double		s_y;
+	double		pos_x;
+	double		pos_y;
 	double		dx;
 	double		dy;
 	double		px;
@@ -84,6 +86,8 @@ typedef struct s_calc
 	int		drawStart;
 	int		drawEnd;
 	int		done;
+	int		textWidth;
+	int		textHeight;
 }				t_calc;
 
 typedef struct	s_cub
@@ -92,10 +96,13 @@ typedef struct	s_cub
 	void	*win_ptr;
 	int		win_width;
 	int		win_height;
-	//int		x_test;
-	//int		y_test;
 	char	*t;
 	void	*img_ptr;
+	void	*wall_n;
+	void	*wall_s;
+	void	*wall_e;
+	void	*wall_w;
+	void	*sprite1;
 	t_calc	clc;
 	t_map	*m;
 }				t_cub;
@@ -110,7 +117,14 @@ int				ft_errors(int err);
 int				f_i(char **str, int ret);
 int				ft_free(char **str, int ret, int fd);
 void			ft_init_map(t_cub *c, t_map *map);
+void			init_nsew(t_map *map, int i, int j);
 int				ft_tablen(char **str, int j);
 char			*ft_strdup(char *s1);
 int				parse_map(int fd, t_map *map);
+int				draw_map(t_cub *c);
+void			free_struct(t_map *map);
+int				ft_key_event(int key, t_cub *s);
+int				ft_move(int key, t_cub *s);
+int				ft_exit_button(t_cub *s);
+int				ft_exit_esc(t_cub *s);
 #endif
