@@ -45,6 +45,9 @@ int	ft_move(int key, t_cub *s)
       s->m->py = oldPlaneX * sinf(0.1) + s->m->py * cosf(0.1);
     }
 	//mlx_destroy_window (s->mlx_ptr, s->img_ptr);
-	draw_map(s);
+	if (s->textures == 1)
+		draw_text_map(s);
+	else
+		draw_map(s);
 	return (1);
 }

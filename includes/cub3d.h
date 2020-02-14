@@ -43,6 +43,8 @@
 # define BRUN 9788928
 # define J 38
 # define NB_INFOS 8
+# define TEXTWIDTH 64
+# define TEXTHEIGHT 64
 
 typedef struct	s_map
 {
@@ -88,6 +90,15 @@ typedef struct s_calc
 	int		done;
 	int		textWidth;
 	int		textHeight;
+
+	int		textNum;
+	double	wallX;
+	int		texX;
+
+	double	step;
+	double	textPos;
+	int		texY;
+	int		color;
 }				t_calc;
 
 typedef struct	s_cub
@@ -103,6 +114,7 @@ typedef struct	s_cub
 	void	*wall_e;
 	void	*wall_w;
 	void	*sprite1;
+	int		textures;
 	t_calc	clc;
 	t_map	*m;
 }				t_cub;
@@ -127,4 +139,5 @@ int				ft_key_event(int key, t_cub *s);
 int				ft_move(int key, t_cub *s);
 int				ft_exit_button(t_cub *s);
 int				ft_exit_esc(t_cub *s);
+int				draw_text_map(t_cub *c);
 #endif

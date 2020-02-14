@@ -36,8 +36,8 @@ int     draw_map(t_cub *c)
 {
 	int		x;
 
-	if (!(c->img_ptr = mlx_new_image(c->mlx_ptr, c->win_width, c->win_height)))
-		exit(1);
+	//if (!(c->img_ptr = mlx_new_image(c->mlx_ptr, c->win_width, c->win_height)))
+	//	exit(1);
 	c->clc.done = 1;
 	x = -1;
 	while (++x < c->win_width)

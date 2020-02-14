@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:19:17 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/13 20:08:49 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/14 19:40:19 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_init_map(t_cub *c, t_map *map)
 	c->sprite1 = NULL;
 	c->win_width = -1;
 	c->win_height = -1;
+	c->textures = 0;
 	map->no = NULL;
 	map->so	= NULL;
 	map->we = NULL;

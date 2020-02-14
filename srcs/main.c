@@ -1,14 +1,24 @@
 #include "cub3d.h"
 
-int	ft_text(t_cub *s)
+/*int	ft_text(t_cub *s)
 {
 	int w;
 	int h;
+	void *tab_text[4];
 
 	s->wall_n = mlx_xpm_file_to_image (s->mlx_ptr, "../img/mossy.xpm", &w, &h);
-	mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->wall_n, 0, 0);
+	s->wall_s = mlx_xpm_file_to_image (s->mlx_ptr, "../img/eagle.xpm", &w, &h);
+	s->wall_e = mlx_xpm_file_to_image (s->mlx_ptr, "../img/wood.xpm", &w, &h);
+	s->wall_w = mlx_xpm_file_to_image (s->mlx_ptr, "../img/colorstone.xpm", &w, &h);
+
+	tab_text[0] = s->wall_n;
+	tab_text[1] = s->wall_s;
+	tab_text[2] = s->wall_e;
+	tab_text[3] = s->wall_w;
+
+	//mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->wall_n, 0, 0);
 	return (1);
-}
+}*/
 
 //Regler les noms de fonctions et variables a la norme
 
@@ -53,6 +63,8 @@ int		main(int argc, char **argv)
 	if (!(c.mlx_ptr = mlx_init()))
 		exit(1);
 	if (!(c.win_ptr = mlx_new_window(c.mlx_ptr, c.win_width, c.win_height, c.t)))
+		exit(1);
+	if (!(c.img_ptr = mlx_new_image(c.mlx_ptr, c.win_width, c.win_height)))
 		exit(1);
 	draw_map(&c);
 	//mlx_loop_hook(c.mlx_ptr, draw_map, &c);
