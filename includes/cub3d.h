@@ -45,7 +45,8 @@
 # define NB_INFOS 8
 # define TEXTWIDTH 64
 # define TEXTHEIGHT 64
-
+# define MOVESPEED 0.08
+# define W_PROTECT 0.16
 typedef struct	s_map
 {
 	char		*no;
@@ -109,11 +110,13 @@ typedef struct	s_cub
 	int		win_height;
 	char	*t;
 	void	*img_ptr;
+	int		*pix;
 	void	*wall_n;
 	void	*wall_s;
 	void	*wall_e;
 	void	*wall_w;
 	void	*sprite1;
+	int 	*tab_text[4];
 	int		textures;
 	t_calc	clc;
 	t_map	*m;

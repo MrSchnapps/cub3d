@@ -7,42 +7,49 @@ int	ft_move(int key, t_cub *s)
 
 	if (key == W)
 	{
-		if(s->m->m[(int)(s->m->pos_y + s->m->dx * 0.1)][(int)s->m->pos_x] != '1') 
-			s->m->pos_y += s->m->dx * 0.1;
-      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x + s->m->dy * 0.1)] != '1') 
-		  	s->m->pos_x += s->m->dy * 0.1;
+		if(s->m->m[(int)(s->m->pos_y + s->m->dx * MOVESPEED + (s->m->dx < 0 ? -W_PROTECT : W_PROTECT))][(int)s->m->pos_x] != '1') 
+			s->m->pos_y += s->m->dx * MOVESPEED;
+      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x + s->m->dy * MOVESPEED + (s->m->dy < 0 ? -W_PROTECT : W_PROTECT))] != '1') 
+		  	s->m->pos_x += s->m->dy * MOVESPEED;
 	}
-	if (key == S)
+	else if (key == S)
 	{
-		if(s->m->m[(int)(s->m->pos_y - s->m->dx * 0.1)][(int)s->m->pos_x] != '1') 
-			s->m->pos_y -= s->m->dx * 0.1;
-      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x - s->m->dy * 0.1)] != '1')
-		  	s->m->pos_x -= s->m->dy * 0.1;
+		if(s->m->m[(int)(s->m->pos_y - s->m->dx * MOVESPEED - (s->m->dx < 0 ? -W_PROTECT : W_PROTECT))][(int)s->m->pos_x] != '1') 
+			s->m->pos_y -= s->m->dx * MOVESPEED;
+      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x - s->m->dy * MOVESPEED - (s->m->dy < 0 ? -W_PROTECT : W_PROTECT))] != '1')
+		  	s->m->pos_x -= s->m->dy * MOVESPEED;
 	}
-	if (key == D)
+	else if (key == D)
+	{
+		if(s->m->m[(int)(s->m->pos_y + s->m->dx * MOVESPEED + (s->m->dy < 0 ? -W_PROTECT : W_PROTECT))][(int)s->m->pos_x] != '1') 
+			s->m->pos_y += s->m->dy * MOVESPEED;
+      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x - s->m->dy * MOVESPEED - (s->m->dx < 0 ? -W_PROTECT : W_PROTECT))] != '1') 
+		  	s->m->pos_x -= s->m->dx * MOVESPEED;
+	}
+	else if (key == A)
+	{
+		if(s->m->m[(int)(s->m->pos_y - s->m->dx * MOVESPEED - (s->m->dy < 0 ? -W_PROTECT : W_PROTECT))][(int)s->m->pos_x] != '1') 
+			s->m->pos_y -= s->m->dy * MOVESPEED;
+      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x + s->m->dy * MOVESPEED + (s->m->dx < 0 ? -W_PROTECT : W_PROTECT))] != '1') 
+		  	s->m->pos_x += s->m->dx * MOVESPEED;
+	}
+	else if (key == DROITE)
     {
-      //both camera direction and camera plane must be rotated
       oldDirX = s->m->dx;
-      s->m->dx = s->m->dx * cosf(-0.1) - s->m->dy * sinf(-0.1);
-      s->m->dy = oldDirX * sinf(-0.1) + s->m->dy * cosf(-0.1);
+      s->m->dx = s->m->dx * cosf(-MOVESPEED) - s->m->dy * sinf(-MOVESPEED);
+      s->m->dy = oldDirX * sinf(-MOVESPEED) + s->m->dy * cosf(-MOVESPEED);
       oldPlaneX = s->m->px;
-      s->m->px = s->m->px * cosf(-0.1) - s->m->py * sinf(-0.1);
-      s->m->py = oldPlaneX * sinf(-0.1) + s->m->py * cosf(-0.1);
-	  /*printf("\ndx ==> |%f|\n", s->m->dx);
-	  printf("\ndy ==> |%f|\n", s->m->dy);
-	  printf("\npx ==> |%f|\n", s->m->px);
-	  printf("\npy ==> |%f|\n", s->m->py);
-	  printf("\n----------------------------------\n");*/
+      s->m->px = s->m->px * cosf(-MOVESPEED) - s->m->py * sinf(-MOVESPEED);
+      s->m->py = oldPlaneX * sinf(-MOVESPEED) + s->m->py * cosf(-MOVESPEED);
     }
-	if (key == A)
+	else if (key == GAUCHE)
     {
-      //both camera direction and camera plane must be rotated
       oldDirX = s->m->dx;
-      s->m->dx = s->m->dx * cosf(0.1) - s->m->dy * sinf(0.1);
-      s->m->dy = oldDirX * sinf(0.1) + s->m->dy * cosf(0.1);
+      s->m->dx = s->m->dx * cosf(MOVESPEED) - s->m->dy * sinf(MOVESPEED);
+      s->m->dy = oldDirX * sinf(MOVESPEED) + s->m->dy * cosf(MOVESPEED);
       oldPlaneX = s->m->px;
-      s->m->px = s->m->px * cosf(0.1) - s->m->py * sinf(0.1);
-      s->m->py = oldPlaneX * sinf(0.1) + s->m->py * cosf(0.1);
+      s->m->px = s->m->px * cosf(MOVESPEED) - s->m->py * sinf(MOVESPEED);
+      s->m->py = oldPlaneX * sinf(MOVESPEED) + s->m->py * cosf(MOVESPEED);
     }
 	//mlx_destroy_window (s->mlx_ptr, s->img_ptr);
 	if (s->textures == 1)

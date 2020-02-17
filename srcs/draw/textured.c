@@ -2,28 +2,28 @@
 
 int     draw_text_map(t_cub *c)
 {
-	int w;
-	int h;
-	int id;
+	//int w;
+	//int h;
+	//int id;
 	int	x;
 	int y;
-	int *tab_text[4];
+	//int *tab_text[4];
 	//int texNum;
 	//int	buffer[c->win_height][c->win_width];	
-	int	*pix;
+	//int	*pix;
 
-	w = 64;
-	h = 64;
-	c->wall_n = mlx_xpm_file_to_image(c->mlx_ptr, "../img/eagle.xpm", &w, &h);
+	/*w = 64;
+	h = 64;*/
+	/*c->wall_n = mlx_xpm_file_to_image(c->mlx_ptr, "../img/eagle.xpm", &w, &h);
 	c->wall_s = mlx_xpm_file_to_image(c->mlx_ptr, "../img/mossy.xpm", &w, &h);
 	c->wall_e = mlx_xpm_file_to_image(c->mlx_ptr, "../img/wood.xpm", &w, &h);
-	c->wall_w = mlx_xpm_file_to_image(c->mlx_ptr, "../img/colorstone.xpm", &w, &h);
+	c->wall_w = mlx_xpm_file_to_image(c->mlx_ptr, "../img/colorstone.xpm", &w, &h);*/
 
-	tab_text[0] = (int *)mlx_get_data_addr(c->wall_n, &id, &id, &id);
+	/*tab_text[0] = (int *)mlx_get_data_addr(c->wall_n, &id, &id, &id);
 	tab_text[1] = (int *)mlx_get_data_addr(c->wall_s, &id, &id, &id);
 	tab_text[2] = (int *)mlx_get_data_addr(c->wall_e, &id, &id, &id);
-	tab_text[3] = (int *)mlx_get_data_addr(c->wall_w, &id, &id, &id);
-	pix = (int *)mlx_get_data_addr(c->img_ptr, &id, &id, &id);
+	tab_text[3] = (int *)mlx_get_data_addr(c->wall_w, &id, &id, &id);*/
+	//pix = (int *)mlx_get_data_addr(c->img_ptr, &id, &id, &id);
 	c->clc.done = 1;
 	x = -1;
 	int i;
@@ -35,7 +35,7 @@ int     draw_text_map(t_cub *c)
 		j = 0;
 		while(j < c->win_width)
 		{
-			pix[i * c->win_width + j] = CYAN;
+			c->pix[i * c->win_width + j] = CYAN;
 			j++;
 		}
 		i++;
@@ -46,7 +46,7 @@ int     draw_text_map(t_cub *c)
 		j = 0;
 		while(j < c->win_width)
 		{
-			pix[i * c->win_width + j] = BRUN;
+			c->pix[i * c->win_width + j] = BRUN;
 			j++;
 		}
 		i++;
@@ -60,10 +60,12 @@ int     draw_text_map(t_cub *c)
 		c->clc.map_x = (int)c->m->pos_y;
 		c->clc.map_y = (int)c->m->pos_x;
 
-		c->clc.deltaDistX = fabs(1 / c->clc.ray_dir_x);
-		c->clc.deltaDistY = fabs(1 / c->clc.ray_dir_y);
-		//deltaDistX = (ray_dir_x == 0) ? 0 : ((ray_dir_x == 0) ? 1 : fabs(1 / ray_dir_x));
-	 	//deltaDistY = (ray_dir_y == 0) ? 0 : ((ray_dir_y == 0) ? 1 : fabs(1 / ray_dir_y));
+		//c->clc.deltaDistX = fabs(1 / c->clc.ray_dir_x);
+		//c->clc.deltaDistY = fabs(1 / c->clc.ray_dir_y);
+
+		c->clc.deltaDistX = (c->clc.ray_dir_x == 0) ? 0 : ((c->clc.ray_dir_x == 0) ? 1 : fabs(1 / c->clc.ray_dir_x));
+	 	c->clc.deltaDistY = (c->clc.ray_dir_y == 0) ? 0 : ((c->clc.ray_dir_y == 0) ? 1 : fabs(1 / c->clc.ray_dir_y));
+
 		c->clc.hit = 0;
 		if (c->clc.ray_dir_x < 0)
 		{
@@ -114,14 +116,20 @@ int     draw_text_map(t_cub *c)
 		if (c->clc.drawEnd >= c->win_height)
 			c->clc.drawEnd = c->win_height - 1;
 		
-		c->clc.textNum = c->m->m[c->clc.map_x][c->clc.map_y] - 1;
+		//texturing calculations
+		if (c->clc.side == 1)
+			c->clc.textNum = 0;
+		else if (c->clc.side == 0)
+			c->clc.textNum = 1;
 		
+		//calculate value of wallX
 		if (c->clc.side == 0)
-			c->clc.wallX = c->m->pos_x + c->clc.perpWallDist + c->clc.ray_dir_x;
+			c->clc.wallX = c->m->pos_x + c->clc.perpWallDist * c->clc.ray_dir_y;
 		else
-			c->clc.wallX = c->m->pos_y + c->clc.perpWallDist + c->clc.ray_dir_x;
+			c->clc.wallX = c->m->pos_y + c->clc.perpWallDist * c->clc.ray_dir_x;
 		c->clc.wallX -= floor(c->clc.wallX);
 
+		//x coordinate on the texture
 		c->clc.texX = (int)(c->clc.wallX * (double)TEXTWIDTH);
 		if (c->clc.side == 0 && c->clc.ray_dir_x > 0)
 			c->clc.texX = TEXTWIDTH - c->clc.texX - 1;
@@ -132,13 +140,14 @@ int     draw_text_map(t_cub *c)
 		c->clc.textPos = (c->clc.drawStart - c->win_height / 2 + c->clc.lineHeight / 2) * c->clc.step;
 		y = c->clc.drawStart;
 
+		
 		while (y < c->clc.drawEnd)
 		{
 			//printf("\nw y ==> %d\n", y);
 			c->clc.texY = (int)c->clc.textPos & (TEXTHEIGHT - 1);
 			c->clc.textPos += c->clc.step;
-			c->clc.color = tab_text[c->clc.textNum - '0'][TEXTHEIGHT * c->clc.texY + c->clc.texX];
-			pix[y * c->win_width + x] = c->clc.color;
+			c->clc.color = c->tab_text[c->clc.textNum][TEXTHEIGHT * c->clc.texY + c->clc.texX];
+			c->pix[y * c->win_width + x] = c->clc.color;
 			y++;
 		}
 	}

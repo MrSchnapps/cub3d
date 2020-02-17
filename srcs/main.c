@@ -27,8 +27,8 @@ int		main(int argc, char **argv)
 	t_cub 	c;
 	t_map	m;
 	int		err;
-
-	int i;
+	int 	id;
+	int 	i;
 	
 	if (check_args(argc, argv) < 0)
 		return (1);
@@ -60,12 +60,25 @@ int		main(int argc, char **argv)
 	printf("s_y     ==> |%f|\n", m.pos_y);
 	c.m = &m;
 	c.t = "Cub3D";
+	printf("========> |%f|\n", -W_PROTECT);
 	if (!(c.mlx_ptr = mlx_init()))
 		exit(1);
 	if (!(c.win_ptr = mlx_new_window(c.mlx_ptr, c.win_width, c.win_height, c.t)))
 		exit(1);
 	if (!(c.img_ptr = mlx_new_image(c.mlx_ptr, c.win_width, c.win_height)))
 		exit(1);
+	int w = 64;
+	int h = 64;
+	c.wall_n = mlx_xpm_file_to_image(c.mlx_ptr, "../img/eagle.xpm", &w, &h);
+	c.wall_s = mlx_xpm_file_to_image(c.mlx_ptr, "../img/mossy.xpm", &w, &h);
+	c.wall_e = mlx_xpm_file_to_image(c.mlx_ptr, "../img/wood.xpm", &w, &h);
+	c.wall_w = mlx_xpm_file_to_image(c.mlx_ptr, "../img/colorstone.xpm", &w, &h);
+
+	c.tab_text[0] = (int *)mlx_get_data_addr(c.wall_n, &id, &id, &id);
+	c.tab_text[1] = (int *)mlx_get_data_addr(c.wall_s, &id, &id, &id);
+	c.tab_text[2] = (int *)mlx_get_data_addr(c.wall_e, &id, &id, &id);
+	c.tab_text[3] = (int *)mlx_get_data_addr(c.wall_w, &id, &id, &id);
+	c.pix = (int *)mlx_get_data_addr(c.img_ptr, &id, &id, &id);
 	draw_map(&c);
 	//mlx_loop_hook(c.mlx_ptr, draw_map, &c);
 	mlx_hook(c.win_ptr, KPRESS, 0, ft_key_event, &c);

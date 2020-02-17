@@ -2,32 +2,32 @@
 
 void    vertLine(int x, int drawStart, int drawEnd, t_cub *c, int side)
 {
-	int	*pix;
-	int	id;
+	//int	*pix;
+	//int	id;
 	int i;
 
 	i = 0;
-	pix = (int *)mlx_get_data_addr(c->img_ptr, &id, &id, &id);
+	//pix = (int *)mlx_get_data_addr(c->img_ptr, &id, &id, &id);
 	while (i < drawStart)
 	{
-		pix[i * c->win_width + x] = CYAN;
+		c->pix[i * c->win_width + x] = CYAN;
 		i++;
 	}
-	pix[drawStart * c->win_width + x] = 0;
+	c->pix[drawStart * c->win_width + x] = 0;
 	drawStart++;
 	while (drawStart < drawEnd - 1)
 	{
         if (side == 0)
-            pix[drawStart * c->win_width + x] = GRIS;
+            c->pix[drawStart * c->win_width + x] = GRIS;
         else
-            pix[drawStart * c->win_width + x] = POURPRE;
+            c->pix[drawStart * c->win_width + x] = POURPRE;
 		drawStart++;
 	}
-	pix[drawEnd * c->win_width + x] = 0;
+	c->pix[drawEnd * c->win_width + x] = 0;
 	drawEnd++;
 	while (drawEnd < c->win_height)
 	{
-		pix[drawEnd * c->win_width + x] = BRUN;
+		c->pix[drawEnd * c->win_width + x] = BRUN;
 		drawEnd++;
 	}
 }
