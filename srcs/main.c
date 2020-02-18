@@ -1,25 +1,5 @@
 #include "cub3d.h"
 
-/*int	ft_text(t_cub *s)
-{
-	int w;
-	int h;
-	void *tab_text[4];
-
-	s->wall_n = mlx_xpm_file_to_image (s->mlx_ptr, "../img/mossy.xpm", &w, &h);
-	s->wall_s = mlx_xpm_file_to_image (s->mlx_ptr, "../img/eagle.xpm", &w, &h);
-	s->wall_e = mlx_xpm_file_to_image (s->mlx_ptr, "../img/wood.xpm", &w, &h);
-	s->wall_w = mlx_xpm_file_to_image (s->mlx_ptr, "../img/colorstone.xpm", &w, &h);
-
-	tab_text[0] = s->wall_n;
-	tab_text[1] = s->wall_s;
-	tab_text[2] = s->wall_e;
-	tab_text[3] = s->wall_w;
-
-	//mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->wall_n, 0, 0);
-	return (1);
-}*/
-
 //Regler les noms de fonctions et variables a la norme
 
 int		main(int argc, char **argv)
@@ -29,7 +9,11 @@ int		main(int argc, char **argv)
 	int		err;
 	int 	id;
 	int 	i;
-	
+	int 	w;
+	int 	h;
+
+	w = 64;
+	h = 64;
 	if (check_args(argc, argv) < 0)
 		return (1);
 	ft_init_map(&c, &m);
@@ -61,18 +45,23 @@ int		main(int argc, char **argv)
 	c.m = &m;
 	c.t = "Cub3D";
 	printf("========> |%f|\n", -W_PROTECT);
+
+	
+	test(&c);
+	printf("test ==> x => |%f|\n", c.sprt.all_sprites[0].x);
+	
 	if (!(c.mlx_ptr = mlx_init()))
 		exit(1);
 	if (!(c.win_ptr = mlx_new_window(c.mlx_ptr, c.win_width, c.win_height, c.t)))
 		exit(1);
 	if (!(c.img_ptr = mlx_new_image(c.mlx_ptr, c.win_width, c.win_height)))
 		exit(1);
-	int w = 64;
-	int h = 64;
-	c.wall_n = mlx_xpm_file_to_image(c.mlx_ptr, "../img/eagle.xpm", &w, &h);
-	c.wall_s = mlx_xpm_file_to_image(c.mlx_ptr, "../img/mossy.xpm", &w, &h);
-	c.wall_e = mlx_xpm_file_to_image(c.mlx_ptr, "../img/wood.xpm", &w, &h);
-	c.wall_w = mlx_xpm_file_to_image(c.mlx_ptr, "../img/colorstone.xpm", &w, &h);
+	
+	c.wall_n = mlx_xpm_file_to_image(c.mlx_ptr, c.m->no, &w, &h);
+	c.wall_s = mlx_xpm_file_to_image(c.mlx_ptr, c.m->so, &w, &h);
+	c.wall_e = mlx_xpm_file_to_image(c.mlx_ptr, c.m->ea, &w, &h);
+	c.wall_w = mlx_xpm_file_to_image(c.mlx_ptr, c.m->we, &w, &h);
+	c.sprite1 =  mlx_xpm_file_to_image(c.mlx_ptr, c.m->sprite, &w, &h);
 
 	c.tab_text[0] = (int *)mlx_get_data_addr(c.wall_n, &id, &id, &id);
 	c.tab_text[1] = (int *)mlx_get_data_addr(c.wall_s, &id, &id, &id);

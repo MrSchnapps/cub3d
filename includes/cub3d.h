@@ -21,6 +21,7 @@
 # define S 1
 # define A 0
 # define D 2
+# define T 17
 # define DROITE 124
 # define GAUCHE 123
 # define HAUT 126
@@ -46,7 +47,20 @@
 # define TEXTWIDTH 64
 # define TEXTHEIGHT 64
 # define MOVESPEED 0.08
+# define TURNSPEED 0.05
 # define W_PROTECT 0.16
+
+typedef struct	s_csprt
+{
+	float x;
+	float y;
+}				t_csprt;
+
+/*
+**	All of the informations
+**	about the map
+*/
+
 typedef struct	s_map
 {
 	char		*no;
@@ -54,9 +68,9 @@ typedef struct	s_map
 	char		*we;
 	char		*ea;
 	char		*sprite;
-	int			floor;
-	int			ceil;
 	char		**m;
+	int			floor;
+	int			ceil;	
 	int			m_w;
 	int			m_h;
 	char		start;
@@ -66,7 +80,27 @@ typedef struct	s_map
 	double		dy;
 	double		px;
 	double		py;
+	int			nb_sprites;
 }				t_map;
+
+/*
+**	All of the tools
+**	for sprites
+*/
+
+typedef struct	s_sprt
+{
+	t_csprt	*all_sprites;
+	int		buffer[860][1240];
+	double	zbuffer[1240];
+	int		sprite_order[7];
+	double	sprite_distance[7];
+}				t_sprt;
+
+/*
+**	All of the tools
+**	for walls and textures
+*/
 
 typedef struct s_calc
 {
@@ -88,19 +122,22 @@ typedef struct s_calc
 	int		lineHeight;
 	int		drawStart;
 	int		drawEnd;
-	int		done;
 	int		textWidth;
 	int		textHeight;
-
-	int		textNum;
+	int		text_num;
 	double	wallX;
 	int		texX;
-
 	double	step;
 	double	textPos;
 	int		texY;
 	int		color;
 }				t_calc;
+
+/*
+**	Main sctucture
+**	informations about the window
+**	screen, img, textures
+*/
 
 typedef struct	s_cub
 {
@@ -117,9 +154,16 @@ typedef struct	s_cub
 	void	*wall_w;
 	void	*sprite1;
 	int 	*tab_text[4];
+	int		side_text;
 	int		textures;
 	t_calc	clc;
 	t_map	*m;
+	t_sprt	sprt;
+
+	int bords;
+	int mpx;
+	int mpy;
+
 }				t_cub;
 
 int				ft_map(t_map *map, t_cub *c, char *ac_map);
@@ -139,8 +183,17 @@ int				parse_map(int fd, t_map *map);
 int				draw_map(t_cub *c);
 void			free_struct(t_map *map);
 int				ft_key_event(int key, t_cub *s);
-int				ft_move(int key, t_cub *s);
 int				ft_exit_button(t_cub *s);
 int				ft_exit_esc(t_cub *s);
-int				draw_text_map(t_cub *c);
+void			clc_side_dest(t_cub *c);
+void			clc_dist_hit(t_cub *c);
+void			clc_start_end(t_cub *c);
+void			clc_text(t_cub *c);
+void			set_inf_map(t_cub *c, int x);
+void			draw_ceil_floor(t_cub *c);
+void			move_vert(int key, t_cub *s);
+void			move_side(int key, t_cub *s);
+void			move_turn(int key, t_cub *s);
+
+void			test(t_cub *c);
 #endif

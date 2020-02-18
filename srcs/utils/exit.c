@@ -10,6 +10,7 @@ int	ft_exit_button(t_cub *s)
 	(s->wall_e) ? mlx_destroy_image(s->mlx_ptr, s->wall_e) : 0;
 	(s->wall_w) ? mlx_destroy_image(s->mlx_ptr, s->wall_w) : 0;
 	(s->sprite1) ? mlx_destroy_image(s->mlx_ptr, s->sprite1) : 0;
+	free(s->sprt.all_sprites);
 	mlx_clear_window(s->mlx_ptr, s->win_ptr);
 	mlx_destroy_window(s->mlx_ptr, s->win_ptr);
 	exit(0);
@@ -26,6 +27,7 @@ int	ft_exit_esc(t_cub *s)
 	(s->wall_e) ? mlx_destroy_image(s->mlx_ptr, s->wall_e) : 0;
 	(s->wall_w) ? mlx_destroy_image(s->mlx_ptr, s->wall_w) : 0;
 	(s->sprite1) ? mlx_destroy_image(s->mlx_ptr, s->sprite1) : 0;
+	free(s->sprt.all_sprites);
 	mlx_clear_window(s->mlx_ptr, s->win_ptr);
 	mlx_destroy_window(s->mlx_ptr, s->win_ptr);
 	exit(0);

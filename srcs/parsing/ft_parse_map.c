@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:42:05 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/17 14:39:45 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/18 12:35:30 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,17 @@ int		check_line(t_map *m, int i, int j, int l)
 {
 	while ((j = 1) && ++i < m->m_w - 1)
 	{
-		if ((l = ft_strlen(m->m[i])) < 3 || m->m[i][0] != '1' || l != m->m_h)
+		if ((l = ft_strlen(m->m[i])) < 3 || l != m->m_h)
 			return (15);
+		if (m->m[i][0] != '1' || m->m[i][l - 1] != '1')
+			return (14);
 		while (j < l - 1)
 		{
 			if (m->m[i][j] == 'N' || m->m[i][j] == 'S' || m->m[i][j] == 'E' 
 					|| m->m[i][j] == 'W')
 			{
 				if (!m->start)
-				{
 					init_nsew(m, i, j);
-					m->start = m->m[i][j];
-					m->pos_x = j + 0.5;
-					m->pos_y = i + 0.5;
-					//m->pos_x = j;
-					//m->pos_y = i;
-				}
 				else
 					return (16);
 			}

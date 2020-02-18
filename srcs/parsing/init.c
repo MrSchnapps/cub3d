@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:19:17 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/14 19:40:19 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/18 16:55:30 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void	init_nsew(t_map *map, int i, int j)
 		map->px = (map->m[i][j] == 'E') ? 0.66 : -0.66;
 		map->py = 0;
 	}
+	map->start = map->m[i][j];
+	map->pos_x = j + 0.5;
+	map->pos_y = i + 0.5;
 }
 
 void	ft_init_map(t_cub *c, t_map *map)
@@ -41,6 +44,7 @@ void	ft_init_map(t_cub *c, t_map *map)
 	c->win_width = -1;
 	c->win_height = -1;
 	c->textures = 0;
+	c->clc.text_num = 5;
 	map->no = NULL;
 	map->so	= NULL;
 	map->we = NULL;

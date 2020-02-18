@@ -12,6 +12,8 @@ https://lodev.org/cgtutor/raycasting.html
 
 https://guy-grave.developpez.com/tutoriels/jeux/doom-wolfenstein-raycasting/
 
+https://en.wikipedia.org/wiki/BMP_file_format#/media/File:BMPfileFormat.png
+
 gc -I minilibx_opengl -framework OpenGl -framework Appkit -L ../minilibx_opengl -lmlx *.c ../gnl/*.c ../lib/libftprintf.a
 
 gc *.c ../gnl/*.c ../lib/libftprintf.a -o exec.out -I ../includes
@@ -43,3 +45,8 @@ dx = 0
 dy = -1
 px = -0.66
 py = 0
+
+
+si error div par 0 
+//c->clc.deltaDistX = (c->clc.ray_dir_x == 0) ? 0 : ((c->clc.ray_dir_x == 0) ? 1 : fabs(1 / c->clc.ray_dir_x));
+//c->clc.deltaDistY = (c->clc.ray_dir_y == 0) ? 0 : ((c->clc.ray_dir_y == 0) ? 1 : fabs(1 / c->clc.ray_dir_y));
