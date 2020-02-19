@@ -49,7 +49,9 @@
 # define MOVESPEED 0.08
 # define TURNSPEED 0.05
 # define W_PROTECT 0.16
-
+# define UDIV 1
+# define VDIV 1
+# define VMOVE 0.0
 typedef struct	s_csprt
 {
 	float x;
@@ -90,11 +92,28 @@ typedef struct	s_map
 
 typedef struct	s_sprt
 {
-	t_csprt	*all_sprites;
-	int		buffer[860][1240];
-	double	zbuffer[1240];
-	int		sprite_order[7];
-	double	sprite_distance[7];
+	t_csprt		*all_sprites;
+	int			buffer[860][1240];
+	double		zbuffer[1240];
+	int			sprite_order[7];
+	double		sprite_distance[7];
+	double 		sprite_x;
+	double 		sprite_y;
+	double		inv_det;
+	double		transform_x;
+	double		transform_y;
+	int			screen_x;
+	int			sprite_height;
+	int			draw_start_y;
+	int			draw_end_y;
+	int			sprite_width;
+	int			draw_start_x;
+	int			draw_end_x;
+	int			v_move_screen;
+	int			stripe;
+	int			s_text_x;
+	int			s_text_y;
+	int			color;
 }				t_sprt;
 
 /*
@@ -153,6 +172,7 @@ typedef struct	s_cub
 	void	*wall_e;
 	void	*wall_w;
 	void	*sprite1;
+	int		*addr_sprite;
 	int 	*tab_text[4];
 	int		side_text;
 	int		textures;

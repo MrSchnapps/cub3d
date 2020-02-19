@@ -81,26 +81,39 @@ void    vert_line(t_cub *c, int x)
 	c->pix[c->clc.drawStart * c->win_width + x] = 0;
 }
 
-// TERMINER LE TRIAGE DES SPRITES !!!!!
-void	sort_sprite(int *sprite_order, int *sprite_distance, int nb_sprites)
+void	sort_sprite(int *sprite_order, double *sprite_distance, int nb_sprites)
 {
-	int i;
-	double tmp;
+	int 	i;
+	int		is_sort;
+	int		tmp_order;
+	double	tmp_dist;
 
-
-
-	while (i < nb_sprites - 1)
+	is_sort = 0;
+	while (!is_sort)
 	{
-		if (sprite_distance[i] > sprite_distance[i + 1])
-		{
-
-		}
+		is_sort = 1;
+		i = -1;
+		while (++i < nb_sprites - 1)
+			if (sprite_distance[i] < sprite_distance[i + 1])
+			{
+				tmp_dist = sprite_distance[i];
+				tmp_order = sprite_order[i];
+				sprite_distance[i] = sprite_distance[i + 1];
+				sprite_order[i] = sprite_order[i + 1];
+				sprite_distance[i + 1] = tmp_dist;
+				sprite_order[i + 1] = tmp_order;
+				is_sort = 0;
+			}
 	}
 }
 
 int     draw_map(t_cub *c)
 {
 	int		x;
+
+
+	int y;
+	int d;
 
 	x = -1;
 	draw_ceil_floor(c);
@@ -121,23 +134,62 @@ int     draw_map(t_cub *c)
 	}
 
 	int i;
-
+	
 	i = 0;
 	while (i < c->m->nb_sprites)
 	{
 		c->sprt.sprite_order[i] = i;
-		c->sprt.sprite_distance[i] = ((c->m->pos_y - c->sprt.all_sprites[i].y) * (c->m->pos_y - c->sprt.all_sprites[i].x) + 
-									(c->m->pos_x - c->sprt.all_sprites[i].x) * (c->m->pos_x - c->sprt.all_sprites[i].x));
+		c->sprt.sprite_distance[i] = (((double)c->m->pos_y - c->sprt.all_sprites[i].y) * ((double)c->m->pos_y - c->sprt.all_sprites[i].y) + 
+									((double)c->m->pos_x - c->sprt.all_sprites[i].x) * ((double)c->m->pos_x - c->sprt.all_sprites[i].x));
 		i++;
 	}
-	int b;
-	b = 0;
-	while (b < 7)
+	sort_sprite(c->sprt.sprite_order, c->sprt.sprite_distance, c->m->nb_sprites);
+	i = 0;
+	while (i < c->m->nb_sprites)
 	{
-		printf("Sprite dist [%d] ==> |%f|\n", b, c->sprt.sprite_distance[b]);
-		b++;
+		c->sprt.sprite_x = c->sprt.all_sprites[c->sprt.sprite_order[i]].y - c->m->pos_y;
+		c->sprt.sprite_y = c->sprt.all_sprites[c->sprt.sprite_order[i]].x - c->m->pos_x;
+		c->sprt.inv_det = 1.0 / (c->m->px * c->m->dy - c->m->dx * c->m->py);
+		c->sprt.transform_x = c->sprt.inv_det * (c->m->dy * c->sprt.sprite_x - c->m->dx * c->sprt.sprite_y);
+		c->sprt.transform_y = c->sprt.inv_det * (-c->m->py * c->sprt.sprite_x + c->m->px * c->sprt.sprite_y);
+		c->sprt.screen_x = (int)((c->win_width / 2) * (1 + c->sprt.transform_x / c->sprt.transform_y));
+		c->sprt.sprite_height = abs((int)(c->win_height / c->sprt.transform_y));
+		c->sprt.draw_start_y = -c->sprt.sprite_height / 2 + c->win_height / 2;
+		if (c->sprt.draw_start_y < 0)
+			c->sprt.draw_start_y = 0;
+		c->sprt.draw_end_y = c->sprt.sprite_height / 2 + c->win_height / 2;
+		if (c->sprt.draw_end_y >= c->win_height)
+			c->sprt.draw_end_y = c->win_height - 1;
+		c->sprt.sprite_width = abs((int)(c->win_height / c->sprt.transform_y));
+		c->sprt.draw_start_x = -c->sprt.sprite_width / 2 + c->sprt.screen_x;
+		if (c->sprt.draw_start_x < 0)
+			c->sprt.draw_start_x = 0;
+		c->sprt.draw_end_x = c->sprt.sprite_width / 2 + c->sprt.screen_x;
+		if (c->sprt.draw_end_x >=  c->win_width)
+			c->sprt.draw_end_x = c->win_width - 1;
+		c->sprt.stripe = c->sprt.draw_start_x;
+		while (c->sprt.stripe < c->sprt.draw_end_x)
+		{
+			c->sprt.s_text_x = (int)(256 * (c->sprt.stripe - (-c->sprt.sprite_width / 2 + c->sprt.screen_x))
+								* TEXTWIDTH / c->sprt.sprite_width) / 256; 
+			if (c->sprt.transform_y > 0 && c->sprt.stripe > 0 && c->sprt.stripe < c->win_width
+					&& c->sprt.transform_y < c->sprt.zbuffer[c->sprt.stripe])
+			{
+				y = c->sprt.draw_start_y;
+				while (y < c->sprt.draw_end_y)
+				{
+					d = y * 256 - c->win_height * 128 + c->sprt.sprite_height * 128;
+					c->sprt.s_text_y = ((d * TEXTHEIGHT) / c->sprt.sprite_height) / 256;
+					c->sprt.color = c->addr_sprite[TEXTWIDTH * c->sprt.s_text_y + c->sprt.s_text_x];
+					if ((c->sprt.color & 0x00FFFFFF) != 0)
+						c->pix[y * c->win_width + c->sprt.stripe] = c->sprt.color;
+					y++;
+				}
+			}
+			c->sprt.stripe++;
+		}
+		i++;
 	}
-	//sort_sprite(s->sprt.sprite_order, s->sprite_distance, s->m->nb_sprites)
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img_ptr, 0, 0);
 	return (0);
 }

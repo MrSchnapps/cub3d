@@ -23,7 +23,7 @@ int		main(int argc, char **argv)
 		//system("leaks exec.out");
 		return(ft_errors(err));
 	}
-
+	ft_get_sprites(&m);
 	printf("res_width ==> |%d|\n", c.win_width);
 	printf("res_height ==> |%d|\n", c.win_height);	
 	printf("no    ==> |%s|\n", m.no);
@@ -67,6 +67,7 @@ int		main(int argc, char **argv)
 	c.tab_text[1] = (int *)mlx_get_data_addr(c.wall_s, &id, &id, &id);
 	c.tab_text[2] = (int *)mlx_get_data_addr(c.wall_e, &id, &id, &id);
 	c.tab_text[3] = (int *)mlx_get_data_addr(c.wall_w, &id, &id, &id);
+	c.addr_sprite = (int *)mlx_get_data_addr(c.sprite1, &id, &id, &id);
 	c.pix = (int *)mlx_get_data_addr(c.img_ptr, &id, &id, &id);
 	draw_map(&c);
 	//mlx_loop_hook(c.mlx_ptr, draw_map, &c);
