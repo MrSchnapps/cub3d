@@ -1,35 +1,31 @@
 #include "cub3d.h"
 
-int	ft_exit_button(t_cub *s)
+int		ft_exit_button(t_cub *c)
 {
-	printf("on a appuye sur la croix\n");
-	free_struct(s->m);
-	(s->img_ptr) ? mlx_destroy_image(s->mlx_ptr, s->img_ptr) : 0;
-	(s->wall_n) ? mlx_destroy_image(s->mlx_ptr, s->wall_n) : 0;
-	(s->wall_s) ? mlx_destroy_image(s->mlx_ptr, s->wall_s) : 0;
-	(s->wall_e) ? mlx_destroy_image(s->mlx_ptr, s->wall_e) : 0;
-	(s->wall_w) ? mlx_destroy_image(s->mlx_ptr, s->wall_w) : 0;
-	(s->sprite1) ? mlx_destroy_image(s->mlx_ptr, s->sprite1) : 0;
-	free(s->sprt.all_sprites);
-	mlx_clear_window(s->mlx_ptr, s->win_ptr);
-	mlx_destroy_window(s->mlx_ptr, s->win_ptr);
-	exit(0);
+	printf("Button quit\n");
+	ft_exit(c, 0);
 	return (1);
 }
 
-int	ft_exit_esc(t_cub *s)
+int		ft_exit(t_cub *c, int ret)
 {
-	printf("on a appuye sur ESC\n");
-	free_struct(s->m);
-	(s->img_ptr) ? mlx_destroy_image(s->mlx_ptr, s->img_ptr) : 0;
-	(s->wall_n) ? mlx_destroy_image(s->mlx_ptr, s->wall_n) : 0;
-	(s->wall_s) ? mlx_destroy_image(s->mlx_ptr, s->wall_s) : 0;
-	(s->wall_e) ? mlx_destroy_image(s->mlx_ptr, s->wall_e) : 0;
-	(s->wall_w) ? mlx_destroy_image(s->mlx_ptr, s->wall_w) : 0;
-	(s->sprite1) ? mlx_destroy_image(s->mlx_ptr, s->sprite1) : 0;
-	free(s->sprt.all_sprites);
-	mlx_clear_window(s->mlx_ptr, s->win_ptr);
-	mlx_destroy_window(s->mlx_ptr, s->win_ptr);
-	exit(0);
-	return (1);
+	printf("Cleaning memory ...\n");
+
+	
+	free_struct(c->m);
+	(c->img_ptr) ? mlx_destroy_image(c->mlx_ptr, c->img_ptr) : 0;
+	(c->wall_n) ? mlx_destroy_image(c->mlx_ptr, c->wall_n) : 0;
+	(c->wall_s) ? mlx_destroy_image(c->mlx_ptr, c->wall_s) : 0;
+	(c->wall_e) ? mlx_destroy_image(c->mlx_ptr, c->wall_e) : 0;
+	(c->wall_w) ? mlx_destroy_image(c->mlx_ptr, c->wall_w) : 0;
+	(c->sprite1) ? mlx_destroy_image(c->mlx_ptr, c->sprite1) : 0;
+	free(c->sprt.all_sprites);
+	free(c->sprt.zbuffer);
+	free(c->sprt.sprite_order);
+	free(c->sprt.sprite_distance);
+	(c->win_ptr) ? mlx_clear_window(c->mlx_ptr, c->win_ptr) : 0;
+	(c->win_ptr) ? mlx_destroy_window(c->mlx_ptr, c->win_ptr) : 0;
+	printf("Memory Clean !!\n");
+	exit(ret);
+	return (ret);
 }

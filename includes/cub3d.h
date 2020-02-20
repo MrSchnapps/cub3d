@@ -47,11 +47,17 @@
 # define TEXTWIDTH 64
 # define TEXTHEIGHT 64
 # define MOVESPEED 0.08
-# define TURNSPEED 0.05
+# define TURNSPEED 0.08
 # define W_PROTECT 0.16
 # define UDIV 1
 # define VDIV 1
 # define VMOVE 0.0
+
+/*
+**	Simple struct for
+**	get the sprites pos
+*/
+
 typedef struct	s_csprt
 {
 	float x;
@@ -93,10 +99,9 @@ typedef struct	s_map
 typedef struct	s_sprt
 {
 	t_csprt		*all_sprites;
-	int			buffer[860][1240];
-	double		zbuffer[1240];
-	int			sprite_order[7];
-	double		sprite_distance[7];
+	double		*zbuffer;
+	int			*sprite_order;
+	double		*sprite_distance;
 	double 		sprite_x;
 	double 		sprite_y;
 	double		inv_det;
@@ -160,6 +165,7 @@ typedef struct s_calc
 
 typedef struct	s_cub
 {
+	char	save;
 	void	*mlx_ptr;
 	void	*win_ptr;
 	int		win_width;
@@ -189,13 +195,13 @@ typedef struct	s_cub
 int				ft_map(t_map *map, t_cub *c, char *ac_map);
 int				ft_strlen(char *str);
 int				ft_strcmp(char *s1, char *s2);
-int     		check_args(int argc, char **argv);
+int     		check_args(int argc, char **argv, t_cub *c);
 char			**ft_split(char *s, char c);
 int				ft_atoi(char *nptr);
-int				ft_errors(int err);
+int				ft_errors(int err, t_cub *c, int ret);
 int				f_i(char **str, int ret);
 int				ft_free(char **str, int ret, int fd);
-void			ft_init_map(t_cub *c, t_map *map);
+void			ft_init(t_cub *c, t_map *map);
 void			init_nsew(t_map *map, int i, int j);
 int				ft_tablen(char **str, int j);
 char			*ft_strdup(char *s1);
@@ -203,8 +209,8 @@ int				parse_map(int fd, t_map *map);
 int				draw_map(t_cub *c);
 void			free_struct(t_map *map);
 int				ft_key_event(int key, t_cub *s);
-int				ft_exit_button(t_cub *s);
-int				ft_exit_esc(t_cub *s);
+int				ft_exit_button(t_cub *c);
+int				ft_exit(t_cub *c, int ret);
 void			clc_side_dest(t_cub *c);
 void			clc_dist_hit(t_cub *c);
 void			clc_start_end(t_cub *c);
@@ -214,6 +220,8 @@ void			draw_ceil_floor(t_cub *c);
 void			move_vert(int key, t_cub *s);
 void			move_side(int key, t_cub *s);
 void			move_turn(int key, t_cub *s);
-
+int				ft_get_sprites(t_map *m, t_cub *c);
 void			test(t_cub *c);
+void			draw_sprites(t_cub *c);
+void			clc_sprites(t_cub *c);
 #endif

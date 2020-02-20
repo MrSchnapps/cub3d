@@ -3,7 +3,10 @@
 int ft_key_event(int key, t_cub *c)
 {
 	if (key == ESC)
-		ft_exit_esc(c);
+	{
+		printf("ESC key!\n");
+		ft_exit(c, 0);
+	}	
 	else if (key == W || key == S)
 		move_vert(key, c);
 	else if (key == A || key == D)

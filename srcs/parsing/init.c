@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:19:17 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/18 16:55:30 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:51:00 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,8 @@ void	init_nsew(t_map *map, int i, int j)
 	map->pos_y = i + 0.5;
 }
 
-void	ft_init_map(t_cub *c, t_map *map)
+void	init_map(t_map *map)
 {
-	c->wall_n = NULL;
-	c->wall_s = NULL;
-	c->wall_e = NULL;
-	c->wall_w = NULL;
-	c->sprite1 = NULL;
-	c->win_width = -1;
-	c->win_height = -1;
-	c->textures = 0;
-	c->clc.text_num = 5;
 	map->no = NULL;
 	map->so	= NULL;
 	map->we = NULL;
@@ -60,4 +51,27 @@ void	ft_init_map(t_cub *c, t_map *map)
 	map->dy = 0;
 	map->px = 0;
 	map->py = -0.66;
+	map->nb_sprites = 0;
+}
+
+void	ft_init(t_cub *c, t_map *map)
+{
+	c->mlx_ptr = NULL;
+	c->win_ptr = NULL;
+	c->img_ptr = NULL;
+	c->wall_n = NULL;
+	c->wall_s = NULL;
+	c->wall_e = NULL;
+	c->wall_w = NULL;
+	c->sprite1 = NULL;
+	c->win_width = -1;
+	c->win_height = -1;
+	c->textures = 1;
+	c->clc.text_num = 5;
+	c->sprt.all_sprites = NULL;
+	c->sprt.zbuffer = NULL;
+	c->sprt.sprite_order = NULL;
+	c->sprt.sprite_distance = NULL;
+	c->save = 0;
+	init_map(map);	
 }
