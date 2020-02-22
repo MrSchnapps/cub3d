@@ -52,6 +52,8 @@
 # define UDIV 1
 # define VDIV 1
 # define VMOVE 0.0
+# define BMP_HEADER 14
+# define DIB_HEADER 40
 
 /*
 **	Simple struct for
@@ -224,4 +226,5 @@ int				ft_get_sprites(t_map *m, t_cub *c);
 void			test(t_cub *c);
 void			draw_sprites(t_cub *c);
 void			clc_sprites(t_cub *c);
+int				ft_bmp(t_cub *c);
 #endif
