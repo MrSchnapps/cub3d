@@ -1,47 +1,77 @@
 #include "cub3d.h"
 
-void	move_vert(int key, t_cub *s)
+void	clc_move(int key, t_cub *s, int *y, int *x)
 {
 	if (key == W)
 	{
-		if(s->m->m[(int)(s->m->pos_y + s->m->dx * MOVESPEED + 
-			(s->m->dx < 0 ? -W_PROTECT : W_PROTECT))][(int)s->m->pos_x] != '1') 
-			s->m->pos_y += s->m->dx * MOVESPEED;
-      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x + s->m->dy * MOVESPEED + 
-		  	(s->m->dy < 0 ? -W_PROTECT : W_PROTECT))] != '1') 
-		  	s->m->pos_x += s->m->dy * MOVESPEED;
+		*y = (int)(s->m->pos_y + s->m->dx * MSP + (s->m->dx < 0 ? -PCT : PCT));
+		*x = (int)(s->m->pos_x + s->m->dy * MSP + (s->m->dy < 0 ? -PCT : PCT));
 	}
 	else if (key == S)
 	{
-		if(s->m->m[(int)(s->m->pos_y - s->m->dx * MOVESPEED - 
-			(s->m->dx < 0 ? -W_PROTECT : W_PROTECT))][(int)s->m->pos_x] != '1') 
-			s->m->pos_y -= s->m->dx * MOVESPEED;
-      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x - s->m->dy * MOVESPEED - 
-		  	(s->m->dy < 0 ? -W_PROTECT : W_PROTECT))] != '1')
-		  	s->m->pos_x -= s->m->dy * MOVESPEED;
+		*y = (int)(s->m->pos_y - s->m->dx * MSP - (s->m->dx < 0 ? -PCT : PCT));
+		*x = (int)(s->m->pos_x - s->m->dy * MSP - (s->m->dy < 0 ? -PCT : PCT));
+	}
+	else if (key == D)
+	{
+		*y = (int)(s->m->pos_y + s->m->dx * MSP + (s->m->dy < 0 ? -PCT : PCT));
+
+		*x = (int)(s->m->pos_x - s->m->dy * MSP - (s->m->dx < 0 ? -PCT : PCT));
+	}
+	else if (key == A)
+	{
+		*y = (int)(s->m->pos_y - s->m->dx * MSP - (s->m->dy < 0 ? -PCT : PCT));
+
+		*x = (int)(s->m->pos_x + s->m->dy * MSP + (s->m->dx < 0 ? -PCT : PCT));
+	}
+}
+
+void	move_vert(int key, t_cub *s)
+{
+	int y;
+	int x;
+
+	clc_move(key, s, &y, &x);
+	if (key == W)
+	{
+		if(s->m->m[y][(int)s->m->pos_x] < '1' ||
+			s->m->m[y][(int)s->m->pos_x] > '2')
+			s->m->pos_y += s->m->dx * MSP;
+      	if(s->m->m[(int)s->m->pos_y][x] < '1' ||
+		  	s->m->m[(int)s->m->pos_y][x] > '2')
+		  	s->m->pos_x += s->m->dy * MSP;
+	}
+	else if (key == S)
+	{
+		if(s->m->m[y][(int)s->m->pos_x] < '1' ||
+			s->m->m[y][(int)s->m->pos_x] > '2')
+			s->m->pos_y -= s->m->dx * MSP;
+      	if(s->m->m[(int)s->m->pos_y][x] < '1' ||
+		  	s->m->m[(int)s->m->pos_y][x] > '2')
+		  	s->m->pos_x -= s->m->dy * MSP;
 	}
 	draw_map(s);
 }
 
 void	move_side(int key, t_cub *s)
 {
+	int y;
+	int x;
+
+	clc_move(key, s, &y, &x);
 	if (key == D)
 	{
-		if(s->m->m[(int)(s->m->pos_y + s->m->dx * MOVESPEED + 
-			(s->m->dy < 0 ? -W_PROTECT : W_PROTECT))][(int)s->m->pos_x] != '1') 
-			s->m->pos_y += s->m->dy * MOVESPEED;
-      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x - s->m->dy * MOVESPEED -
-		  	(s->m->dx < 0 ? -W_PROTECT : W_PROTECT))] != '1') 
-		  	s->m->pos_x -= s->m->dx * MOVESPEED;
+		if(s->m->m[y][(int)s->m->pos_x] < '1' || s->m->m[y][(int)s->m->pos_x] > '2')
+			s->m->pos_y += s->m->dy * MSP;
+      	if(s->m->m[(int)s->m->pos_y][x] < '1' || s->m->m[(int)s->m->pos_y][x] > '2')
+		  	s->m->pos_x -= s->m->dx * MSP;
 	}
 	else if (key == A)
 	{
-		if(s->m->m[(int)(s->m->pos_y - s->m->dx * MOVESPEED - 
-			(s->m->dy < 0 ? -W_PROTECT : W_PROTECT))][(int)s->m->pos_x] != '1')
-			s->m->pos_y -= s->m->dy * MOVESPEED;
-      	if(s->m->m[(int)s->m->pos_y][(int)(s->m->pos_x + s->m->dy * MOVESPEED + 
-		  	(s->m->dx < 0 ? -W_PROTECT : W_PROTECT))] != '1') 
-		  	s->m->pos_x += s->m->dx * MOVESPEED;
+		if(s->m->m[y][(int)s->m->pos_x] < '1' || s->m->m[y][(int)s->m->pos_x] > '2')
+			s->m->pos_y -= s->m->dy * MSP;
+      	if(s->m->m[(int)s->m->pos_y][x] < '1' || s->m->m[(int)s->m->pos_y][x] > '2') 
+		  	s->m->pos_x += s->m->dx * MSP;
 	}
 	draw_map(s);
 }
