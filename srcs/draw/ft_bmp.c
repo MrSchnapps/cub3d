@@ -19,13 +19,13 @@ void    draw_screenshot(int fd, t_cub *c, t_prtsc *p, unsigned char *tab_pix)
 
 	write(fd, &p->tab_bmp, BMP_HEADER);
 	write(fd, &p->tab_dip, DIB_HEADER);
-	y = c->win_height;
+	y = c->win_h;
 	while (--y >= 0)
 	{
 		x = -1;
-		while (++x < c->win_width)
+		while (++x < c->win_w)
 		{
-			t = y * c->win_width + x;
+			t = y * c->win_w + x;
 			p->b = c->pix[t] % 256;
 			p->g = ((c->pix[t] - p->b) / 256) % 256;
 			p->r = ((c->pix[t] - p->b) / (256 * 256)) - p->g / 256;
@@ -33,7 +33,7 @@ void    draw_screenshot(int fd, t_cub *c, t_prtsc *p, unsigned char *tab_pix)
 			tab_pix[3 * x + 1] = p->g;
 			tab_pix[3 * x + 2] = p->r;
 		}
-		write(fd, tab_pix, c->win_width * 3);
+		write(fd, tab_pix, c->win_w * 3);
 		write(fd, p->tab_pad, p->p_size);
 	}
 }
@@ -48,14 +48,14 @@ void	set_header(t_cub *c, t_prtsc *p)
 	p->tab_bmp[5] = (unsigned char)(p->filesize >> 24);
 	p->tab_bmp[10] = (unsigned char)(BMP_HEADER + DIB_HEADER);
 	p->tab_dip[0] = (unsigned char)(DIB_HEADER);
-	p->tab_dip[4] = (unsigned char)(c->win_width);
-	p->tab_dip[5] = (unsigned char)(c->win_width >> 8);
-	p->tab_dip[6] = (unsigned char)(c->win_width >> 16);
-	p->tab_dip[7] = (unsigned char)(c->win_width >> 24);
-	p->tab_dip[8] = (unsigned char)(c->win_height);
-	p->tab_dip[9] = (unsigned char)(c->win_height >> 8);
-	p->tab_dip[10] = (unsigned char)(c->win_height >> 16);
-	p->tab_dip[11] = (unsigned char)(c->win_height >> 24);
+	p->tab_dip[4] = (unsigned char)(c->win_w);
+	p->tab_dip[5] = (unsigned char)(c->win_w >> 8);
+	p->tab_dip[6] = (unsigned char)(c->win_w >> 16);
+	p->tab_dip[7] = (unsigned char)(c->win_w >> 24);
+	p->tab_dip[8] = (unsigned char)(c->win_h);
+	p->tab_dip[9] = (unsigned char)(c->win_h >> 8);
+	p->tab_dip[10] = (unsigned char)(c->win_h >> 16);
+	p->tab_dip[11] = (unsigned char)(c->win_h >> 24);
 	p->tab_dip[12] = (unsigned char)(1);
 	p->tab_dip[14] = (unsigned char)(3 * 8);
 }
@@ -66,9 +66,9 @@ int     ft_bmp(t_cub *c)
 	t_prtsc    		p;
 	unsigned char   *tab_pix;
 
-	p.w = 3 * c->win_width;
+	p.w = 3 * c->win_w;
 	p.p_size = (4 - p.w % 4) % 4;
-	p.filesize = BMP_HEADER + DIB_HEADER + ((p.w + p.p_size) * c->win_height);
+	p.filesize = BMP_HEADER + DIB_HEADER + ((p.w + p.p_size) * c->win_h);
 	ft_bzero(p.tab_bmp, BMP_HEADER);
 	ft_bzero(p.tab_dip, DIB_HEADER);
 	ft_bzero(p.tab_pad, 3);

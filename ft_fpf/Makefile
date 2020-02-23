@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = ../lib/libfpf.a
 
 SRCS = srcs/ft_printf.c \
 		srcs/ft_llutoah.c \
@@ -42,7 +42,7 @@ $(NAME):	$(OBJS)
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 clean: 
-		rm -rf */*.o
+		rm -rf $(OBJS)
 
 fclean:		clean
 			${RM} ${NAME}

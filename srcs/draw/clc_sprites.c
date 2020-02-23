@@ -34,22 +34,22 @@ void	set_clc(t_cub *c, int i)
 				(c->m->dy * c->sprt.sprite_x - c->m->dx * c->sprt.sprite_y);
 	c->sprt.trsfm_y = c->sprt.inv_det * 
 				(-c->m->py * c->sprt.sprite_x + c->m->px * c->sprt.sprite_y);
-	c->sprt.screen_x = (int)((c->win_width / 2) * 
+	c->sprt.screen_x = (int)((c->win_w / 2) * 
 				(1 + c->sprt.trsfm_x / c->sprt.trsfm_y));
-	c->sprt.sprite_height = abs((int)(c->win_height / c->sprt.trsfm_y));
-	c->sprt.draw_start_y = -c->sprt.sprite_height / 2 + c->win_height / 2;
+	c->sprt.sprite_height = abs((int)(c->win_h / c->sprt.trsfm_y));
+	c->sprt.draw_start_y = -c->sprt.sprite_height / 2 + c->win_h / 2;
 	if (c->sprt.draw_start_y < 0)
 		c->sprt.draw_start_y = 0;
-	c->sprt.draw_end_y = c->sprt.sprite_height / 2 + c->win_height / 2;
-	if (c->sprt.draw_end_y >= c->win_height)
-		c->sprt.draw_end_y = c->win_height - 1;
-	c->sprt.sprite_width = abs((int)(c->win_height / c->sprt.trsfm_y));
+	c->sprt.draw_end_y = c->sprt.sprite_height / 2 + c->win_h / 2;
+	if (c->sprt.draw_end_y >= c->win_h)
+		c->sprt.draw_end_y = c->win_h - 1;
+	c->sprt.sprite_width = abs((int)(c->win_h / c->sprt.trsfm_y));
 	c->sprt.draw_start_x = -c->sprt.sprite_width / 2 + c->sprt.screen_x;
 	if (c->sprt.draw_start_x < 0)
 		c->sprt.draw_start_x = 0;
 	c->sprt.draw_end_x = c->sprt.sprite_width / 2 + c->sprt.screen_x;
-	if (c->sprt.draw_end_x >=  c->win_width)
-		c->sprt.draw_end_x = c->win_width - 1;
+	if (c->sprt.draw_end_x >=  c->win_w)
+		c->sprt.draw_end_x = c->win_w - 1;
 	c->sprt.stripe = c->sprt.draw_start_x;
 }
 

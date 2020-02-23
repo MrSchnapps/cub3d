@@ -47,7 +47,7 @@
 # define PCT 0.16
 # define BMP_HEADER 14
 # define DIB_HEADER 40
-# define PATH_SCREEN_SAVE "../screenshots/save.bmp"
+# define PATH_SCREEN_SAVE "screenshots/save.bmp"
 
 /*
 **	informations for
@@ -183,8 +183,8 @@ typedef struct		s_cub
 	char			save;
 	void			*mlx_ptr;
 	void			*win_ptr;
-	int				win_width;
-	int				win_height;
+	int				win_w;
+	int				win_h;
 	char			*t;
 	void			*img_ptr;
 	int				*pix;
@@ -207,18 +207,18 @@ typedef struct		s_cub
 }					t_cub;
 
 int					ft_map(t_map *map, t_cub *c, char *ac_map);
-int					ft_strlen(char *str);
+int					ft_strlen_c(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int     			check_args(int argc, char **argv, t_cub *c);
-char				**ft_split(char *s, char c);
-int					ft_atoi(char *nptr);
+char				**ft_split_c(char *s, char c);
+int					ft_atoi_c(char *nptr);
 int					ft_errors(int err, t_cub *c, int ret);
 int					f_i(char **str, int ret);
 int					ft_free(char **str, int ret, int fd);
 void				ft_init(t_cub *c, t_map *map);
 void				init_nsew(t_map *map, int i, int j);
 int					ft_tablen(char **str, int j);
-char				*ft_strdup(char *s1);
+char				*ft_strdup_c(char *s1);
 int					parse_map(int fd, t_map *map);
 int					draw_map(t_cub *c);
 void				free_struct(t_map *map);

@@ -16,7 +16,7 @@ int		check_line(t_map *m, int i, int j, int l)
 {
 	while ((j = 1) && ++i < m->m_w - 1)
 	{
-		if ((l = ft_strlen(m->m[i])) < 3 || l != m->m_h)
+		if ((l = ft_strlen_c(m->m[i])) < 3 || l != m->m_h)
 			return (15);
 		if (m->m[i][0] != '1' || m->m[i][l - 1] != '1')
 			return (14);
@@ -75,10 +75,10 @@ char	**ft_append(char **m, char *line)
 		return (NULL);
 	while (i < len - 1)
 	{
-		t[i] = ft_strdup(m[i]);
+		t[i] = ft_strdup_c(m[i]);
 		i++;
 	}
-	t[i] = ft_strdup(line);
+	t[i] = ft_strdup_c(line);
 	t[i + 1] = NULL;
 	return (t);
 

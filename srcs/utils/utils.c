@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int     ft_strlen(char *str)
+int     ft_strlen_c(char *str)
 {
 	int i;
 
@@ -22,7 +22,7 @@ int		ft_strcmp(char *s1, char *s2)
 	return (s1[i] - s2[i]);
 }
 
-int		ft_atoi(char *nptr)
+int		ft_atoi_c(char *nptr)
 {
 	int					sign;
 	unsigned int		nb;
@@ -61,12 +61,12 @@ int		ft_tablen(char **str, int j)
 	return (i);
 }
 
-char	*ft_strdup(char *s1)
+char	*ft_strdup_c(char *s1)
 {
 	char	*str;
 	char	*ptrstr;
 
-	if (!(str = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char))))
+	if (!(str = (char *)malloc((ft_strlen_c(s1) + 1) * sizeof(char))))
 		return (NULL);
 	ptrstr = str;
 	while (*s1)

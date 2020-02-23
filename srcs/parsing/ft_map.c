@@ -24,10 +24,10 @@ int		parse_res(char **split, t_cub *c)
 	while (split[2][++i])
 		if (split[2][i] < 48 || split[2][i] > 57)
 			return (-1);
-	if ((c->win_width = ft_atoi(split[1])) > 2560)
-		c->win_width = 2560;
-	if ((c->win_height = ft_atoi(split[2])) > 1440)
-		c->win_height = 1440;
+	if ((c->win_w = ft_atoi_c(split[1])) > 2560)
+		c->win_w = 2560;
+	if ((c->win_h = ft_atoi_c(split[2])) > 1440)
+		c->win_h = 1440;
 	return (1);
 }
 
@@ -41,7 +41,7 @@ int		parse_color(char *str, int *nb)
 	j = -1;
 	while (++j < 3 && str[i])
 	{
-		tab[j] = ft_atoi(&str[i]);
+		tab[j] = ft_atoi_c(&str[i]);
 		while (str[i] != ',' && str[i])
 			if (str[i] < 48 || str[i++] > 57)
 				return (-1);
@@ -60,23 +60,23 @@ int		parse_infos(char *line, t_map *m, t_cub *c)
 	char	**s;
 	int		i;
 
-	if (!line || !(s = ft_split(line, ' ')))
+	if (!line || !(s = ft_split_c(line, ' ')))
 		return (7);
 	i = ft_tablen(s, 1);
 	if (i < 2 || i > 3)
 		return (7);
-	if (!ft_strcmp(s[0], "R") && i == 3 && c->win_height == -1 && c->win_width == -1)
+	if (!ft_strcmp(s[0], "R") && i == 3 && c->win_h == -1 && c->win_w == -1)
 		return ((parse_res(s, c) < 0) ? f_i(s, 8) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "NO") && i == 2 && !m->no)
-		return ((!(m->no = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+		return ((!(m->no = ft_strdup_c(s[1]))) ? f_i(s, 11) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "SO") && i == 2 && !m->so)
-		return ((!(m->so = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+		return ((!(m->so = ft_strdup_c(s[1]))) ? f_i(s, 11) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "WE") && i == 2 && !m->we)
-		return ((!(m->we = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+		return ((!(m->we = ft_strdup_c(s[1]))) ? f_i(s, 11) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "EA") && i == 2 && !m->ea)
-		return ((!(m->ea = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+		return ((!(m->ea = ft_strdup_c(s[1]))) ? f_i(s, 11) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "S") && i == 2 && !m->sprite)
-		return ((!(m->sprite = ft_strdup(s[1]))) ? f_i(s, 11) : f_i(s, 0));
+		return ((!(m->sprite = ft_strdup_c(s[1]))) ? f_i(s, 11) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "F") && i == 2 && m->floor == -1)
 		return ((parse_color(s[1], &m->floor) < 0) ? f_i(s, 9) : f_i(s, 0));
 	else if (!ft_strcmp(s[0], "C") && i == 2 && m->ceil == -1)

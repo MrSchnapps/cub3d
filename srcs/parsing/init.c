@@ -64,8 +64,8 @@ void	ft_init(t_cub *c, t_map *map)
 	c->wall_e = NULL;
 	c->wall_w = NULL;
 	c->sprite1 = NULL;
-	c->win_width = -1;
-	c->win_height = -1;
+	c->win_w = -1;
+	c->win_h = -1;
 	c->textures = 1;
 	c->clc.text_num = 5;
 	c->sprt.asprt = NULL;

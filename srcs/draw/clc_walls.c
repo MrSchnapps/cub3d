@@ -2,7 +2,7 @@
 
 void	set_inf_map(t_cub *c, int x)
 {
-	c->clc.camera_x = 2 * x / (double)c->win_width - 1;
+	c->clc.camera_x = 2 * x / (double)c->win_w - 1;
 	c->clc.rdx = c->m->dx + c->m->px * c->clc.camera_x;
 	c->clc.rdy = c->m->dy + c->m->py * c->clc.camera_x;
 	c->clc.map_x = (int)c->m->pos_y;
@@ -70,13 +70,13 @@ void	clc_start_end(t_cub *c)
 	else
 		c->clc.pwd = (c->clc.map_y - c->m->pos_x + 
 		(1 - c->clc.stepy) / 2) / c->clc.rdy;
-	c->clc.lineHeight = (int)(c->win_height / c->clc.pwd);
-	c->clc.drawStart = (c->win_height / 2) - (c->clc.lineHeight / 2);
+	c->clc.lineHeight = (int)(c->win_h / c->clc.pwd);
+	c->clc.drawStart = (c->win_h / 2) - (c->clc.lineHeight / 2);
 	if (c->clc.drawStart < 0)
 		c->clc.drawStart = 0;
-	c->clc.drawEnd = (c->clc.lineHeight / 2) + (c->win_height / 2);
-	if (c->clc.drawEnd >= c->win_height)
-		c->clc.drawEnd = c->win_height - 1;
+	c->clc.drawEnd = (c->clc.lineHeight / 2) + (c->win_h / 2);
+	if (c->clc.drawEnd >= c->win_h)
+		c->clc.drawEnd = c->win_h - 1;
 }
 
 void	clc_text(t_cub *c)
@@ -92,7 +92,7 @@ void	clc_text(t_cub *c)
 	if (c->clc.side == 1 && c->clc.rdy < 0)
 		c->clc.texX = TEXTWIDTH - c->clc.texX - 1;
 	c->clc.step = 1.0 * TEXTHEIGHT / c->clc.lineHeight;
-	c->clc.textPos = (c->clc.drawStart - c->win_height / 2 + 
+	c->clc.textPos = (c->clc.drawStart - c->win_h / 2 + 
 						c->clc.lineHeight / 2) * c->clc.step;
 }
 

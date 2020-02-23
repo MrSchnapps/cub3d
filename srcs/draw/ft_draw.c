@@ -6,18 +6,18 @@ void	draw_ceil_floor(t_cub *c)
 	int j;
 
 	i = -1;
-	while (++i < c->win_height / 2)
+	while (++i < c->win_h / 2)
 	{
 		j = -1;
-		while(++j < c->win_width)
-			c->pix[i * c->win_width + j] = c->m->ceil;
+		while(++j < c->win_w)
+			c->pix[i * c->win_w + j] = c->m->ceil;
 	}
-	i = c->win_height / 2;
-	while (i < c->win_height)
+	i = c->win_h / 2;
+	while (i < c->win_h)
 	{
 		j = -1;
-		while(++j < c->win_width)
-			c->pix[i * c->win_width + j] = c->m->floor;
+		while(++j < c->win_w)
+			c->pix[i * c->win_w + j] = c->m->floor;
 		i++;
 	}
 }
@@ -33,7 +33,7 @@ void	vert_line_text(t_cub *c, int x)
 		c->clc.textPos += c->clc.step;
 		c->clc.color = c->tab_text[c->clc.text_num][TEXTHEIGHT * 
 			c->clc.texY + c->clc.texX];
-		c->pix[y * c->win_width + x] = c->clc.color;
+		c->pix[y * c->win_w + x] = c->clc.color;
 		y++;
 	}
 }
@@ -43,23 +43,23 @@ void    vert_line(t_cub *c, int x)
 	int i;
 
 	i = 0;
-	c->pix[c->clc.drawStart * c->win_width + x] = 0;
+	c->pix[c->clc.drawStart * c->win_w + x] = 0;
 	c->clc.drawStart++;
 	while (c->clc.drawStart < c->clc.drawEnd)
 	{
 		if (c->bords == 1)
-			c->pix[c->clc.drawStart * c->win_width + x] = 0;
+			c->pix[c->clc.drawStart * c->win_w + x] = 0;
         else if (c->clc.text_num == 0)
-            c->pix[c->clc.drawStart * c->win_width + x] = GREY;
+            c->pix[c->clc.drawStart * c->win_w + x] = GREY;
         else if (c->clc.text_num == 1)
-            c->pix[c->clc.drawStart * c->win_width + x] = DARK_RED;
+            c->pix[c->clc.drawStart * c->win_w + x] = DARK_RED;
 		else if (c->clc.text_num == 2)
-			c->pix[c->clc.drawStart * c->win_width + x] = LIGHT_ORANGE;
+			c->pix[c->clc.drawStart * c->win_w + x] = LIGHT_ORANGE;
 		else if (c->clc.text_num == 3)
-			c->pix[c->clc.drawStart * c->win_width + x] = GREEN;
+			c->pix[c->clc.drawStart * c->win_w + x] = GREEN;
 		c->clc.drawStart++;
 	}
-	c->pix[c->clc.drawStart * c->win_width + x] = 0;
+	c->pix[c->clc.drawStart * c->win_w + x] = 0;
 }
 
 void	draw_sprites(t_cub *c)
@@ -69,20 +69,20 @@ void	draw_sprites(t_cub *c)
 
 	while (c->sprt.stripe < c->sprt.draw_end_x)
 	{
-		c->sprt.tx = (int)(256 * (c->sprt.stripe - (-c->sprt.sprite_width 
+		c->sprt.tx = (int)(256 * (c->sprt.stripe - (-c->sprt.sprite_width
 			/ 2 + c->sprt.screen_x)) * TEXTWIDTH / c->sprt.sprite_width) / 256;
-		if (c->sprt.trsfm_y > 0 && c->sprt.stripe > 0 && c->sprt.stripe 
-			< c->win_width && c->sprt.trsfm_y < c->sprt.zbuffer[c->sprt.stripe])
+		if (c->sprt.trsfm_y > 0 && c->sprt.stripe > 0 && c->sprt.stripe
+			< c->win_w && c->sprt.trsfm_y < c->sprt.zbuffer[c->sprt.stripe])
 		{
 			y = c->sprt.draw_start_y;
 			while (y < c->sprt.draw_end_y)
 			{
-				d = y * 256 - c->win_height * 128 + c->sprt.sprite_height * 128;
+				d = y * 256 - c->win_h * 128 + c->sprt.sprite_height * 128;
 				c->sprt.ty = ((d * TEXTHEIGHT) / c->sprt.sprite_height) / 256;
-				c->sprt.color = c->addr_sprite[TEXTWIDTH * 
+				c->sprt.color = c->addr_sprite[TEXTWIDTH *
 								c->sprt.ty + c->sprt.tx];
 				if ((c->sprt.color & 0x00FFFFFF) != 0)
-					c->pix[y * c->win_width + c->sprt.stripe] = c->sprt.color;
+					c->pix[y * c->win_w + c->sprt.stripe] = c->sprt.color;
 				y++;
 			}
 		}
@@ -96,7 +96,7 @@ int     draw_map(t_cub *c)
 	
 	x = -1;
 	draw_ceil_floor(c);
-	while (++x < c->win_width)
+	while (++x < c->win_w)
 	{
 		set_inf_map(c, x);
 		clc_side_dest(c);

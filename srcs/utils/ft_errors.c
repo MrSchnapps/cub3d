@@ -13,7 +13,7 @@ int     check_args(int argc, char **argv, t_cub *c)
 		return(5);
 	if (i == 1)
 		return (-1);
-	i = ft_strlen(argv[1]) - 1;
+	i = ft_strlen_c(argv[1]) - 1;
 	if (i < 4 || (argv[1][i] != 'b' || argv[1][i - 1] != 'u' || 
 					argv[1][i - 2] != 'c' || argv[1][i - 3] != '.'))
 	{

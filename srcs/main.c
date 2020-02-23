@@ -8,10 +8,10 @@ int		set_mlx(t_cub *c)
 
 	w = 64;
 	h = 64;
-	if (!(c->win_ptr = mlx_new_window(c->mlx_ptr, c->win_width, c->win_height,
+	if (!(c->win_ptr = mlx_new_window(c->mlx_ptr, c->win_w, c->win_h,
 		c->t)))
 		return (21);
-	if (!(c->img_ptr = mlx_new_image(c->mlx_ptr, c->win_width, c->win_height)))
+	if (!(c->img_ptr = mlx_new_image(c->mlx_ptr, c->win_w, c->win_h)))
 		return (22);
 	if ((!(c->wall_n = mlx_xpm_file_to_image(c->mlx_ptr, c->m->no, &w, &h)))
 		|| (!(c->wall_s = mlx_xpm_file_to_image(c->mlx_ptr, c->m->so, &w, &h)))

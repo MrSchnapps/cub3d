@@ -31,13 +31,13 @@ void     get_num_sprites(t_map *m)
 
 int     allocate_tabs(t_cub *c, t_map *m)
 {
-    if ((!(c->sprt.zbuffer = (double *)malloc(c->win_width * 
+    if ((!(c->sprt.zbuffer = (double *)malloc(c->win_w *
         sizeof(double))))
-    || (!(c->sprt.sprite_order = (int *)malloc(m->nb_sprites * 
+    || (!(c->sprt.sprite_order = (int *)malloc(m->nb_sprites *
         sizeof(int))))
-    || (!(c->sprt.sprite_distance = (double *)malloc(m->nb_sprites * 
+    || (!(c->sprt.sprite_distance = (double *)malloc(m->nb_sprites *
         sizeof(double))))
-    || (!(c->sprt.asprt = (t_csprt *)malloc(m->nb_sprites * 
+    || (!(c->sprt.asprt = (t_csprt *)malloc(m->nb_sprites *
         sizeof(t_csprt)))))
         return (0);
     return (1);
