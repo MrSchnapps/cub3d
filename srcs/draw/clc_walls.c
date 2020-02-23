@@ -3,37 +3,39 @@
 void	set_inf_map(t_cub *c, int x)
 {
 	c->clc.camera_x = 2 * x / (double)c->win_width - 1;
-	c->clc.ray_dir_x = c->m->dx + c->m->px * c->clc.camera_x;
-	c->clc.ray_dir_y = c->m->dy + c->m->py * c->clc.camera_x;
+	c->clc.rdx = c->m->dx + c->m->px * c->clc.camera_x;
+	c->clc.rdy = c->m->dy + c->m->py * c->clc.camera_x;
 	c->clc.map_x = (int)c->m->pos_y;
 	c->clc.map_y = (int)c->m->pos_x;
-	c->clc.deltaDistX = fabs(1 / c->clc.ray_dir_x);
-	c->clc.deltaDistY = fabs(1 / c->clc.ray_dir_y);
+	c->clc.dlt_dx = fabs(1 / c->clc.rdx);
+	c->clc.dlt_dy = fabs(1 / c->clc.rdy);
 }
 
 void    clc_side_dest(t_cub *c)
 {
-	if (c->clc.ray_dir_x < 0)
+	if (c->clc.rdx < 0)
 	{
-		c->clc.stepX = -1;
-		c->clc.sideDistX = (c->m->pos_y - c->clc.map_x) * c->clc.deltaDistX;
+		c->clc.stepx = -1;
+		c->clc.sdx = (c->m->pos_y - c->clc.map_x) * c->clc.dlt_dx;
 	}
 	else
 	{
-		c->clc.stepX = 1;
-		c->clc.sideDistX = (c->clc.map_x + 1.0 - c->m->pos_y) * c->clc.deltaDistX;
+		c->clc.stepx = 1;
+		c->clc.sdx = (c->clc.map_x + 1.0 - c->m->pos_y) * c->clc.dlt_dx;
 	}
-	if (c->clc.ray_dir_y < 0)
+	if (c->clc.rdy < 0)
 	{
-		c->clc.stepY = -1;
-		c->clc.sideDistY = (c->m->pos_x - c->clc.map_y) * c->clc.deltaDistY;
+		c->clc.stepy = -1;
+		c->clc.sdy = (c->m->pos_x - c->clc.map_y) * c->clc.dlt_dy;
 	}
 	else
 	{
-		c->clc.stepY = 1;
-		c->clc.sideDistY = (c->clc.map_y + 1.0 - c->m->pos_x) * c->clc.deltaDistY;
+		c->clc.stepy = 1;
+		c->clc.sdy = (c->clc.map_y + 1.0 - c->m->pos_x) * c->clc.dlt_dy;
 	}
 }
+
+
 
 void    clc_dist_hit(t_cub *c)
 {
@@ -41,56 +43,34 @@ void    clc_dist_hit(t_cub *c)
 	while (c->clc.hit == 0)
 	{
 		c->bords = 0;
-		if (c->clc.sideDistX < c->clc.sideDistY)
+		if (c->clc.sdx < c->clc.sdy)
 		{
-			c->clc.sideDistX += c->clc.deltaDistX;
-			c->clc.map_x += c->clc.stepX;
+			c->clc.sdx += c->clc.dlt_dx;
+			c->clc.map_x += c->clc.stepx;
 			c->clc.side = 0;
-
-			if (c->m->m[c->clc.map_x][c->clc.map_y] == '1') 
-			{	
-				c->clc.hit = 1;
-				if (c->mpx != c->clc.map_x || c->mpy != c->clc.map_y)
-					c->bords = 1;
-				c->mpx = c->clc.map_x;
-				c->mpy = c->clc.map_y;
-				if (c->clc.text_num == 2|| c->clc.text_num == 3)
-					c->bords = 1;
-				c->clc.text_num = (c->clc.ray_dir_x < 0) ? 0 : 1;
-			}
+			if (c->m->m[c->clc.map_x][c->clc.map_y] == '1')
+				find_side(c, 1);
 		}
 		else
 		{
-			if (c->clc.sideDistX == c->clc.sideDistY)
-				c->bords = 1;
-			c->clc.sideDistY += c->clc.deltaDistY;
-			c->clc.map_y += c->clc.stepY;
+			c->clc.sdy += c->clc.dlt_dy;
+			c->clc.map_y += c->clc.stepy;
 			c->clc.side = 1;
-			if (c->m->m[c->clc.map_x][c->clc.map_y] == '1') 
-			{
-				c->clc.hit = 1;
-				if (c->mpx != c->clc.map_x || c->mpy != c->clc.map_y)
-					c->bords = 1;
-				c->mpx = c->clc.map_x;
-				c->mpy = c->clc.map_y;
-				if (c->clc.text_num == 1 || c->clc.text_num == 0)
-					c->bords = 1;
-
-				c->clc.text_num = (c->clc.ray_dir_y < 0) ? 2 : 3;
-			}
+			if (c->m->m[c->clc.map_x][c->clc.map_y] == '1')
+				find_side(c, 2);
 		}
-		/*if (c->m->m[c->clc.map_x][c->clc.map_y] == '1') 
-			c->clc.hit = 1;*/
 	}
 }
 
 void	clc_start_end(t_cub *c)
 {
 	if (c->clc.side == 0)
-		c->clc.perpWallDist = (c->clc.map_x - c->m->pos_y + (1 - c->clc.stepX) / 2) / c->clc.ray_dir_x;
+		c->clc.pwd = (c->clc.map_x - c->m->pos_y + 
+		(1 - c->clc.stepx) / 2) / c->clc.rdx;
 	else
-		c->clc.perpWallDist = (c->clc.map_y - c->m->pos_x + (1 - c->clc.stepY) / 2) / c->clc.ray_dir_y;
-	c->clc.lineHeight = (int)(c->win_height / c->clc.perpWallDist);
+		c->clc.pwd = (c->clc.map_y - c->m->pos_x + 
+		(1 - c->clc.stepy) / 2) / c->clc.rdy;
+	c->clc.lineHeight = (int)(c->win_height / c->clc.pwd);
 	c->clc.drawStart = (c->win_height / 2) - (c->clc.lineHeight / 2);
 	if (c->clc.drawStart < 0)
 		c->clc.drawStart = 0;
@@ -102,16 +82,17 @@ void	clc_start_end(t_cub *c)
 void	clc_text(t_cub *c)
 {
 	if (c->clc.side == 0)
-		c->clc.wallX = c->m->pos_x + c->clc.perpWallDist * c->clc.ray_dir_y;
+		c->clc.wallX = c->m->pos_x + c->clc.pwd * c->clc.rdy;
 	else
-		c->clc.wallX = c->m->pos_y + c->clc.perpWallDist * c->clc.ray_dir_x;
+		c->clc.wallX = c->m->pos_y + c->clc.pwd * c->clc.rdx;
 	c->clc.wallX -= floor(c->clc.wallX);
 	c->clc.texX = (int)(c->clc.wallX * (double)TEXTWIDTH);
-	if (c->clc.side == 0 && c->clc.ray_dir_x > 0)
+	if (c->clc.side == 0 && c->clc.rdx > 0)
 		c->clc.texX = TEXTWIDTH - c->clc.texX - 1;
-	if (c->clc.side == 1 && c->clc.ray_dir_y < 0)
+	if (c->clc.side == 1 && c->clc.rdy < 0)
 		c->clc.texX = TEXTWIDTH - c->clc.texX - 1;
 	c->clc.step = 1.0 * TEXTHEIGHT / c->clc.lineHeight;
-	c->clc.textPos = (c->clc.drawStart - c->win_height / 2 + c->clc.lineHeight / 2) * c->clc.step;
+	c->clc.textPos = (c->clc.drawStart - c->win_height / 2 + 
+						c->clc.lineHeight / 2) * c->clc.step;
 }
 

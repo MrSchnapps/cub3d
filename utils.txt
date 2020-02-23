@@ -50,3 +50,46 @@ py = 0
 si error div par 0 
 //c->clc.deltaDistX = (c->clc.ray_dir_x == 0) ? 0 : ((c->clc.ray_dir_x == 0) ? 1 : fabs(1 / c->clc.ray_dir_x));
 //c->clc.deltaDistY = (c->clc.ray_dir_y == 0) ? 0 : ((c->clc.ray_dir_y == 0) ? 1 : fabs(1 / c->clc.ray_dir_y));
+
+
+http://www.proftnj.com/RGB3.htm 
+149 94 0 pour test le sol screenshot ok
+
+//# define RED 16711680
+//# define BLUE 255
+# define GREEN 65280
+//# define ORANGE 16753664
+# define LIGHT_ORANGE 16764672
+# define GREY 10855845
+//# define MARRON 13143808
+# define CYAN 55024
+# define DARK_RED 10884887
+# define BRUN 9788928
+
+/*if (c->m->m[c->clc.map_x][c->clc.map_y] == '1') 
+			c->clc.hit = 1;*/
+
+void	print_test(t_cub *c, t_map *m)
+{
+	int i;
+
+	i = 0;
+	printf("res_width ==> |%d|\n", c->win_width);
+	printf("res_height ==> |%d|\n", c->win_height);	
+	printf("no    ==> |%s|\n", m->no);
+	printf("so    ==> |%s|\n", m->so);
+	printf("we    ==> |%s|\n", m->we);
+	printf("ea    ==> |%s|\n", m->ea);
+	printf("sprit ==> |%s|\n", m->sprite);
+	printf("floor ==> |%d|\n", m->floor);
+	printf("ceil  ==> |%d|\n", m->ceil);
+	printf("map :\n");
+	while(m->m[i])
+		printf("|%s|\n", m->m[i++]);
+	printf("mapWeight     ==> |%d|\n", m->m_w);
+	printf("mapHeight     ==> |%d|\n", m->m_h);
+	printf("start ==> |%c|\n", m->start);
+	printf("s_x     ==> |%f|\n", m->pos_x);
+	printf("s_y     ==> |%f|\n", m->pos_y);
+	//printf("test ==> x => |%f|\n", c->sprt.all_sprites[0].x);
+}

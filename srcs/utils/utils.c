@@ -60,3 +60,17 @@ int		ft_tablen(char **str, int j)
 			i++;
 	return (i);
 }
+
+char	*ft_strdup(char *s1)
+{
+	char	*str;
+	char	*ptrstr;
+
+	if (!(str = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char))))
+		return (NULL);
+	ptrstr = str;
+	while (*s1)
+		*str++ = *s1++;
+	*str = '\0';
+	return (ptrstr);
+}

@@ -5,13 +5,13 @@ NO ../img/mossy.xpm
 
 WE ../img/wood.xpm
 
-F   201,255,0
+F   149,94,0
 
 EA ../img/purplestone.xpm
 
 SO  ../img/redbrick.xpm
 
-C 200,40,20
+C 0,214,240
 
 S ../img/barrel.xpm
 

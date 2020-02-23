@@ -3,15 +3,12 @@
 int ft_key_event(int key, t_cub *c)
 {
 	if (key == ESC)
-	{
-		printf("ESC key!\n");
 		ft_exit(c, 0);
-	}	
 	else if (key == W || key == S)
 		move_vert(key, c);
 	else if (key == A || key == D)
 		move_side(key, c);
-	else if (key == DROITE || key == GAUCHE)
+	else if (key == RIGHT || key == LEFT)
 		move_turn(key, c);
 	else if (key == T)
 	{
@@ -21,7 +18,5 @@ int ft_key_event(int key, t_cub *c)
 			c->textures = 0;
 		draw_map(c);
 	}
-	else 
-		printf("touch pressee: %d\n", key);
 	return (1);
 }

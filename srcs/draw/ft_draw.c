@@ -10,14 +10,14 @@ void	draw_ceil_floor(t_cub *c)
 	{
 		j = -1;
 		while(++j < c->win_width)
-			c->pix[i * c->win_width + j] = CYAN;
+			c->pix[i * c->win_width + j] = c->m->ceil;
 	}
 	i = c->win_height / 2;
 	while (i < c->win_height)
 	{
 		j = -1;
 		while(++j < c->win_width)
-			c->pix[i * c->win_width + j] = BRUN;
+			c->pix[i * c->win_width + j] = c->m->floor;
 		i++;
 	}
 }
@@ -31,7 +31,8 @@ void	vert_line_text(t_cub *c, int x)
 	{
 		c->clc.texY = (int)c->clc.textPos & (TEXTHEIGHT - 1);
 		c->clc.textPos += c->clc.step;
-		c->clc.color = c->tab_text[c->clc.text_num][TEXTHEIGHT * c->clc.texY + c->clc.texX];
+		c->clc.color = c->tab_text[c->clc.text_num][TEXTHEIGHT * 
+			c->clc.texY + c->clc.texX];
 		c->pix[y * c->win_width + x] = c->clc.color;
 		y++;
 	}
@@ -49,11 +50,11 @@ void    vert_line(t_cub *c, int x)
 		if (c->bords == 1)
 			c->pix[c->clc.drawStart * c->win_width + x] = 0;
         else if (c->clc.text_num == 0)
-            c->pix[c->clc.drawStart * c->win_width + x] = GRIS;
+            c->pix[c->clc.drawStart * c->win_width + x] = GREY;
         else if (c->clc.text_num == 1)
-            c->pix[c->clc.drawStart * c->win_width + x] = POURPRE;
+            c->pix[c->clc.drawStart * c->win_width + x] = DARK_RED;
 		else if (c->clc.text_num == 2)
-			c->pix[c->clc.drawStart * c->win_width + x] = ORANGE_CLAIR;
+			c->pix[c->clc.drawStart * c->win_width + x] = LIGHT_ORANGE;
 		else if (c->clc.text_num == 3)
 			c->pix[c->clc.drawStart * c->win_width + x] = GREEN;
 		c->clc.drawStart++;
@@ -68,17 +69,18 @@ void	draw_sprites(t_cub *c)
 
 	while (c->sprt.stripe < c->sprt.draw_end_x)
 	{
-		c->sprt.s_text_x = (int)(256 * (c->sprt.stripe - (-c->sprt.sprite_width / 2 + c->sprt.screen_x))
-							* TEXTWIDTH / c->sprt.sprite_width) / 256; 
-		if (c->sprt.transform_y > 0 && c->sprt.stripe > 0 && c->sprt.stripe < c->win_width
-				&& c->sprt.transform_y < c->sprt.zbuffer[c->sprt.stripe])
+		c->sprt.tx = (int)(256 * (c->sprt.stripe - (-c->sprt.sprite_width 
+			/ 2 + c->sprt.screen_x)) * TEXTWIDTH / c->sprt.sprite_width) / 256;
+		if (c->sprt.trsfm_y > 0 && c->sprt.stripe > 0 && c->sprt.stripe 
+			< c->win_width && c->sprt.trsfm_y < c->sprt.zbuffer[c->sprt.stripe])
 		{
 			y = c->sprt.draw_start_y;
 			while (y < c->sprt.draw_end_y)
 			{
 				d = y * 256 - c->win_height * 128 + c->sprt.sprite_height * 128;
-				c->sprt.s_text_y = ((d * TEXTHEIGHT) / c->sprt.sprite_height) / 256;
-				c->sprt.color = c->addr_sprite[TEXTWIDTH * c->sprt.s_text_y + c->sprt.s_text_x];
+				c->sprt.ty = ((d * TEXTHEIGHT) / c->sprt.sprite_height) / 256;
+				c->sprt.color = c->addr_sprite[TEXTWIDTH * 
+								c->sprt.ty + c->sprt.tx];
 				if ((c->sprt.color & 0x00FFFFFF) != 0)
 					c->pix[y * c->win_width + c->sprt.stripe] = c->sprt.color;
 				y++;
@@ -108,15 +110,12 @@ int     draw_map(t_cub *c)
 			vert_line_text(c, x);
 		}
 		if (c->m->nb_sprites > 0)
-			c->sprt.zbuffer[x] = c->clc.perpWallDist;
+			c->sprt.zbuffer[x] = c->clc.pwd;
 	}
 	if (c->m->nb_sprites > 0)
 		clc_sprites(c);
-	if (c->save== 1)
-	{// attention a modif
-		ft_bmp(c);
-		ft_exit(c, 0);
-	}
+	if (c->save == 1)
+		return(ft_bmp(c));
 	mlx_put_image_to_window(c->mlx_ptr, c->win_ptr, c->img_ptr, 0, 0);
 	return (0);
 }

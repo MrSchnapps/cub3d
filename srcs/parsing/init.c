@@ -68,7 +68,7 @@ void	ft_init(t_cub *c, t_map *map)
 	c->win_height = -1;
 	c->textures = 1;
 	c->clc.text_num = 5;
-	c->sprt.all_sprites = NULL;
+	c->sprt.asprt = NULL;
 	c->sprt.zbuffer = NULL;
 	c->sprt.sprite_order = NULL;
 	c->sprt.sprite_distance = NULL;
