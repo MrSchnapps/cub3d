@@ -1,19 +1,19 @@
 
 R    1240  860
 
-NO ../img/mossy.xpm
+NO img/mossy.xpm
 
-WE ../img/wood.xpm
+WE img/wood.xpm
 
 F   149,94,0
 
-EA ../img/purplestone.xpm
+EA img/purplestone.xpm
 
-SO  ../img/redbrick.xpm
+SO  img/redbrick.xpm
 
 C 0,214,240
 
-S ../img/barrel.xpm
+S img/barrel.xpm
 
 1111111111111
 1000010000001
@@ -22,8 +22,6 @@ S ../img/barrel.xpm
 1000000000001
 1000010000001
 1010000000001
-1000000000001
-1000000000001
 1000020000001
 1000000000001
 1000000000001

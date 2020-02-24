@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 15:42:05 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/18 12:35:30 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:34:40 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		check_line(t_map *m, int i, int j, int l)
 			return (14);
 		while (j < l - 1)
 		{
-			if (m->m[i][j] == 'N' || m->m[i][j] == 'S' || m->m[i][j] == 'E' 
+			if (m->m[i][j] == 'N' || m->m[i][j] == 'S' || m->m[i][j] == 'E'
 					|| m->m[i][j] == 'W')
 			{
 				if (!m->start)
@@ -54,7 +54,7 @@ int		check_map(t_map *map)
 		return (15);
 	i = 0;
 	while (map->m[map->m_w - 1][i])
-		if (map->m[map->m_w -1][i++] != '1')
+		if (map->m[map->m_w - 1][i++] != '1')
 			return (14);
 	if (i != map->m_h)
 		return (15);
@@ -68,7 +68,7 @@ char	**ft_append(char **m, char *line)
 	int		len;
 	char	**t;
 	int		i;
-	
+
 	i = 0;
 	len = ft_tablen(m, 1) + 1;
 	if (!(t = (char **)malloc((len + 1) * sizeof(char *))))
@@ -81,14 +81,13 @@ char	**ft_append(char **m, char *line)
 	t[i] = ft_strdup_c(line);
 	t[i + 1] = NULL;
 	return (t);
-
 }
 
 int		add_map(char *line_un, t_map *map, int fd, int ret)
 {
 	char *line;
 	char **tmp;
-	
+
 	line = NULL;
 	tmp = map->m;
 	if (!(map->m = ft_append(map->m, line_un)))
@@ -110,11 +109,11 @@ int		add_map(char *line_un, t_map *map, int fd, int ret)
 	return (ft_free(&line, 0, 0));
 }
 
-int     parse_map(int fd, t_map *map)
+int		parse_map(int fd, t_map *map)
 {
 	char	*line;
-	int     ret;
-	
+	int		ret;
+
 	ret = 1;
 	line = NULL;
 	while (!line || (!ft_strcmp(line, "") && ret > 0))

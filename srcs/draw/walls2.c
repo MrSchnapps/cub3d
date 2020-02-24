@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   walls2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/24 15:24:00 by judecuyp          #+#    #+#             */
+/*   Updated: 2020/02/24 17:09:32 by judecuyp         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	find_side(t_cub *c, int id)
@@ -11,7 +23,7 @@ void	find_side(t_cub *c, int id)
 	{
 		if (c->clc.text_num == 2 || c->clc.text_num == 3)
 			c->bords = 1;
-		c->clc.text_num = (c->clc.rdx < 0) ? 0 : 1;
+		c->clc.text_num = (c->clc.rdx < 0) ? 1 : 0;
 	}
 	else
 	{

@@ -1,12 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/24 15:43:50 by judecuyp          #+#    #+#             */
+/*   Updated: 2020/02/24 16:54:25 by judecuyp         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <errno.h>
 # include "../minilibx_opengl/mlx.h"
 # include "get_next_line.h"
 # include "ft_printf.h"
@@ -75,8 +85,8 @@ typedef struct		s_prtsc
 
 typedef struct		s_csprt
 {
-	float 			x;
-	float 			y;
+	float			x;
+	float			y;
 }					t_csprt;
 
 /*
@@ -93,7 +103,7 @@ typedef struct		s_map
 	char			*sprite;
 	char			**m;
 	int				floor;
-	int				ceil;	
+	int				ceil;
 	int				m_w;
 	int				m_h;
 	char			start;
@@ -117,8 +127,8 @@ typedef struct		s_sprt
 	double			*zbuffer;
 	int				*sprite_order;
 	double			*sprite_distance;
-	double 			sprite_x;
-	double 			sprite_y;
+	double			sprite_x;
+	double			sprite_y;
 	double			inv_det;
 	double			trsfm_x;
 	double			trsfm_y;
@@ -150,25 +160,23 @@ typedef struct		s_calc
 	int				map_x;
 	int				map_y;
 	double			sdx;
-    double			sdy;
+	double			sdy;
 	double			dlt_dx;
-    double			dlt_dy;
-    double			pwd;
+	double			dlt_dy;
+	double			pwd;
 	int				stepx;
-    int				stepy;
+	int				stepy;
 	int				hit;
 	int				side;
-	int				lineHeight;
-	int				drawStart;
-	int				drawEnd;
-	int				textWidth;
-	int				textHeight;
+	int				line_h;
+	int				d_start;
+	int				d_end;
 	int				text_num;
-	double			wallX;
-	int				texX;
+	double			wall_x;
+	int				texx;
 	double			step;
-	double			textPos;
-	int				texY;
+	double			text_pos;
+	int				texy;
 	int				color;
 }					t_calc;
 
@@ -193,8 +201,8 @@ typedef struct		s_cub
 	void			*wall_e;
 	void			*wall_w;
 	void			*sprite1;
-	int				*addr_sprite;
-	int 			*tab_text[4];
+	int				*ad_sprt;
+	int				*t_text[4];
 	int				side_text;
 	int				textures;
 	t_calc			clc;
@@ -203,13 +211,12 @@ typedef struct		s_cub
 	int				bords;
 	int				mpx;
 	int				mpy;
-
 }					t_cub;
 
 int					ft_map(t_map *map, t_cub *c, char *ac_map);
 int					ft_strlen_c(char *str);
 int					ft_strcmp(char *s1, char *s2);
-int     			check_args(int argc, char **argv, t_cub *c);
+int					check_args(int argc, char **argv, t_cub *c);
 char				**ft_split_c(char *s, char c);
 int					ft_atoi_c(char *nptr);
 int					ft_errors(int err, t_cub *c, int ret);

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_bmp.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/24 15:16:34 by judecuyp          #+#    #+#             */
+/*   Updated: 2020/02/24 15:17:33 by judecuyp         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void    ft_bzero(void *tab, unsigned int size)
+void	ft_bzero(void *tab, unsigned int size)
 {
-	unsigned int    i;
-	unsigned char   *tmp;
+	unsigned int	i;
+	unsigned char	*tmp;
 
 	tmp = (unsigned char *)tab;
 	i = -1;
@@ -11,7 +23,7 @@ void    ft_bzero(void *tab, unsigned int size)
 		tmp[i] = 0;
 }
 
-void    draw_screenshot(int fd, t_cub *c, t_prtsc *p, unsigned char *tab_pix)
+void	draw_screenshot(int fd, t_cub *c, t_prtsc *p, unsigned char *tab_pix)
 {
 	int t;
 	int y;
@@ -60,11 +72,11 @@ void	set_header(t_cub *c, t_prtsc *p)
 	p->tab_dip[14] = (unsigned char)(3 * 8);
 }
 
-int     ft_bmp(t_cub *c)
+int		ft_bmp(t_cub *c)
 {
-	int             fd;
-	t_prtsc    		p;
-	unsigned char   *tab_pix;
+	int				fd;
+	t_prtsc			p;
+	unsigned char	*tab_pix;
 
 	p.w = 3 * c->win_w;
 	p.p_size = (4 - p.w % 4) % 4;

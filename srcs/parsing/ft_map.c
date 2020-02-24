@@ -6,7 +6,7 @@
 /*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:47:37 by judecuyp          #+#    #+#             */
-/*   Updated: 2020/02/07 14:25:35 by judecuyp         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:33:00 by judecuyp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		parse_color(char *str, int *nb)
 	short	tab[3];
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	j = -1;
 	while (++j < 3 && str[i])
@@ -106,7 +106,7 @@ int		ft_read_map(int fd, t_map *map, t_cub *c)
 			return (ft_free(&line, ret_infos, fd));
 		ft_free(&line, 0, 0);
 	}
-	if (i !=  NB_INFOS)
+	if (i != NB_INFOS)
 		return (ft_free(&line, ret, fd));
 	return (parse_map(fd, map));
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clc_walls.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: judecuyp <judecuyp@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/24 15:15:14 by judecuyp          #+#    #+#             */
+/*   Updated: 2020/02/24 16:09:53 by judecuyp         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	set_inf_map(t_cub *c, int x)
@@ -11,7 +23,7 @@ void	set_inf_map(t_cub *c, int x)
 	c->clc.dlt_dy = fabs(1 / c->clc.rdy);
 }
 
-void    clc_side_dest(t_cub *c)
+void	clc_side_dest(t_cub *c)
 {
 	if (c->clc.rdx < 0)
 	{
@@ -35,9 +47,7 @@ void    clc_side_dest(t_cub *c)
 	}
 }
 
-
-
-void    clc_dist_hit(t_cub *c)
+void	clc_dist_hit(t_cub *c)
 {
 	c->clc.hit = 0;
 	while (c->clc.hit == 0)
@@ -65,34 +75,33 @@ void    clc_dist_hit(t_cub *c)
 void	clc_start_end(t_cub *c)
 {
 	if (c->clc.side == 0)
-		c->clc.pwd = (c->clc.map_x - c->m->pos_y + 
+		c->clc.pwd = (c->clc.map_x - c->m->pos_y +
 		(1 - c->clc.stepx) / 2) / c->clc.rdx;
 	else
-		c->clc.pwd = (c->clc.map_y - c->m->pos_x + 
+		c->clc.pwd = (c->clc.map_y - c->m->pos_x +
 		(1 - c->clc.stepy) / 2) / c->clc.rdy;
-	c->clc.lineHeight = (int)(c->win_h / c->clc.pwd);
-	c->clc.drawStart = (c->win_h / 2) - (c->clc.lineHeight / 2);
-	if (c->clc.drawStart < 0)
-		c->clc.drawStart = 0;
-	c->clc.drawEnd = (c->clc.lineHeight / 2) + (c->win_h / 2);
-	if (c->clc.drawEnd >= c->win_h)
-		c->clc.drawEnd = c->win_h - 1;
+	c->clc.line_h = (int)(c->win_h / c->clc.pwd);
+	c->clc.d_start = (c->win_h / 2) - (c->clc.line_h / 2);
+	if (c->clc.d_start < 0)
+		c->clc.d_start = 0;
+	c->clc.d_end = (c->clc.line_h / 2) + (c->win_h / 2);
+	if (c->clc.d_end >= c->win_h)
+		c->clc.d_end = c->win_h - 1;
 }
 
 void	clc_text(t_cub *c)
 {
 	if (c->clc.side == 0)
-		c->clc.wallX = c->m->pos_x + c->clc.pwd * c->clc.rdy;
+		c->clc.wall_x = c->m->pos_x + c->clc.pwd * c->clc.rdy;
 	else
-		c->clc.wallX = c->m->pos_y + c->clc.pwd * c->clc.rdx;
-	c->clc.wallX -= floor(c->clc.wallX);
-	c->clc.texX = (int)(c->clc.wallX * (double)TEXTWIDTH);
+		c->clc.wall_x = c->m->pos_y + c->clc.pwd * c->clc.rdx;
+	c->clc.wall_x -= floor(c->clc.wall_x);
+	c->clc.texx = (int)(c->clc.wall_x * (double)TEXTWIDTH);
 	if (c->clc.side == 0 && c->clc.rdx > 0)
-		c->clc.texX = TEXTWIDTH - c->clc.texX - 1;
+		c->clc.texx = TEXTWIDTH - c->clc.texx - 1;
 	if (c->clc.side == 1 && c->clc.rdy < 0)
-		c->clc.texX = TEXTWIDTH - c->clc.texX - 1;
-	c->clc.step = 1.0 * TEXTHEIGHT / c->clc.lineHeight;
-	c->clc.textPos = (c->clc.drawStart - c->win_h / 2 + 
-						c->clc.lineHeight / 2) * c->clc.step;
+		c->clc.texx = TEXTWIDTH - c->clc.texx - 1;
+	c->clc.step = 1.0 * TEXTHEIGHT / c->clc.line_h;
+	c->clc.text_pos = (c->clc.d_start - c->win_h / 2 +
+						c->clc.line_h / 2) * c->clc.step;
 }
-
